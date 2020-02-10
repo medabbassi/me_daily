@@ -66,26 +66,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home,
+              color: Colors.deepPurpleAccent
+            ),
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.business,
+            color: Colors.deepPurpleAccent,),
             title: Text('Business'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.school,
+            color: Colors.deepPurpleAccent,),
             title: Text('School'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_pin),
+            icon: Icon(Icons.person_pin,
+            color: Colors.deepPurpleAccent,),
             title: Text('Profile'),
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.deepPurpleAccent,
         onTap: _onItemTapped,
-        backgroundColor: Colors.grey,
+
       ),
     );
   }

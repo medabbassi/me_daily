@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget{
       body: Container(
         child: Column(
           children: <Widget>[
-            
+
           ],
         ),
       ),
