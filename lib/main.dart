@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/interfaces/home.dart';
+import 'package:me_daily/interfaces/makeActivity.dart';
+import 'dart:async';
 void main() => runApp(MyApp());
 
 /// This Widget is the main application widget.
@@ -22,7 +24,8 @@ class MyApp extends StatelessWidget {
                 child: HomeScreen(),
               ),
               new Container(
-                color: Colors.orange,
+                //color: Colors.orange,
+                child: MakeActivity(),
               ),
               new Container(
                 color: Colors.lightGreen,
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
             indicatorPadding: EdgeInsets.all(5.0),
             indicatorColor: Colors.red,
           ),
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.grey[100],
         ),
       ),
     );

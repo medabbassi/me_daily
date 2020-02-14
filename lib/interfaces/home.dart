@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 bool liked = false;
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   bool liked = false;
 
@@ -25,14 +27,32 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Text(
-              'Now',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-                fontSize: 30,
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Welcome Name here',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
+              ),
+
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Welcome Name here',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 10,
+                ),
               ),
             ),
+            SizedBox(height: 10.0),
             CarouselSlider(
               height: 160.0,
               enlargeCenterPage: true,
@@ -48,9 +68,17 @@ class HomeScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Colors.blueGrey,
                             borderRadius: BorderRadius.circular(12.0)),
-                        child: Text(
-                          'text $i',
-                          style: TextStyle(fontSize: 16.0),
+                        child: Center(
+                          child: Text(
+                            'text $i',
+                            textAlign: TextAlign.center,
+
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+
+                            ),
+                          ),
                         ));
                   },
                 );
@@ -69,10 +97,12 @@ class HomeScreen extends StatelessWidget {
             Card(
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
+                borderRadius: BorderRadius.circular(10.0),
                 onTap: () {
                   print('card clicked');
                 },
                 child: Container(
+
                   margin: EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
                   padding: EdgeInsets.all(10.0),
                   width: 350,
