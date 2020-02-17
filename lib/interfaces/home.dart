@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Me Daily'),
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.orangeAccent,
       ),
       body: Container(
         margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -164,7 +164,7 @@ class HomeScreen extends StatelessWidget {
 
               child: InkWell(
 
-                splashColor: Colors.deepOrangeAccent[300],
+                splashColor: Colors.deepOrangeAccent[100],
                 hoverColor: Colors.deepOrange,
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
@@ -176,7 +176,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   height: 120,
                   width: 350,
-                  color: Colors.deepOrange,
+                  color: Colors.deepOrangeAccent[100],
                 ),
               ),
             )
@@ -186,9 +186,10 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
+          print('presssed flatbutton');
         },
-        child: Icon(Icons.add_alarm),
-        backgroundColor: Colors.green,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.white70,
       ),
     );
   }
