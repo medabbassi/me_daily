@@ -10,7 +10,9 @@ class MakeActivity extends StatelessWidget {
         title: Text('My Activity'),
         backgroundColor: Colors.orangeAccent,
       ),
-      body: Container(),
+      body: Container(
+
+      ),
     );
   }
 }
