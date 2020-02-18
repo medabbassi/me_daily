@@ -19,7 +19,9 @@ class MakeActivity extends StatelessWidget {
         backgroundColor: Colors.orangeAccent,
       ),
       body: Container(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
         child: Column(
+
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: 7.0),
@@ -109,21 +111,46 @@ class MakeActivity extends StatelessWidget {
                 }).toList(),
               ),
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              disabledColor: Colors.grey,
-              disabledTextColor: Colors.black,
-              padding: EdgeInsets.all(8.0),
-              splashColor: Colors.blueAccent,
-              onPressed: () {
-                /*...*/
-              },
-              child: Text(
-                "Flat Button",
-                style: TextStyle(fontSize: 20.0),
-              ),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  color: Colors.blue,
+
+                  textColor: Colors.white,
+                  disabledColor: Colors.grey,
+                  disabledTextColor: Colors.black,
+                  padding: EdgeInsets.all(8.0),
+                  splashColor: Colors.blueAccent,
+                  onPressed: () {
+                    /*...*/
+                  },
+                  child: Text(
+                    "",
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+                SizedBox(width: 10),
+                FlatButton(
+                  color: Colors.blue,
+
+                  textColor: Colors.white,
+                  disabledColor: Colors.grey,
+                  disabledTextColor: Colors.black,
+                  padding: EdgeInsets.all(8.0),
+                  splashColor: Colors.blueAccent,
+                  onPressed: () {
+                    /*...*/
+                  },
+                  child: Text(
+                    "",
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 10.0),
           ],
         ),
       ),

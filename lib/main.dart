@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/interfaces/flowAchievement.dart';
 import 'package:me_daily/interfaces/home.dart';
 import 'package:me_daily/interfaces/makeActivity.dart';
 import 'dart:async';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
                 child: MakeActivity(),
               ),
               new Container(
-                color: Colors.lightGreen,
+                child: flowAchievement(),
               ),
               new Container(
                 color: Colors.red,
