@@ -116,7 +116,10 @@ class MakeActivity extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   color: Colors.blue,
-
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.blue)
+                  ),
                   textColor: Colors.white,
                   disabledColor: Colors.grey,
                   disabledTextColor: Colors.black,
@@ -126,14 +129,17 @@ class MakeActivity extends StatelessWidget {
                     /*...*/
                   },
                   child: Text(
-                    "",
-                    style: TextStyle(fontSize: 20.0),
+                    "view full calender",
+                    style: TextStyle(fontSize: 10.0),
                   ),
                 ),
                 SizedBox(width: 10),
                 FlatButton(
                   color: Colors.blue,
-
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.blue)
+                  ),
                   textColor: Colors.white,
                   disabledColor: Colors.grey,
                   disabledTextColor: Colors.black,
@@ -143,8 +149,8 @@ class MakeActivity extends StatelessWidget {
                     /*...*/
                   },
                   child: Text(
-                    "",
-                    style: TextStyle(fontSize: 20.0),
+                    "Add a reminder",
+                    style: TextStyle(fontSize: 10.0),
                   ),
                 ),
               ],
