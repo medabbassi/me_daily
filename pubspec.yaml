@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_swiper: ^1.1.6
   carousel_slider: ^1.4.1
+  curved_navigation_bar: ^0.3.2
 
 dev_dependencies:
   flutter_test:

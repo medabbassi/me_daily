@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
-class MakeActivity extends StatelessWidget {
+
+class MakeActivity extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MakeActivityState();
+  }
+
+
+}
+
+
+class _MakeActivityState extends State<MakeActivity> {
   final List<String> _listViewData = [
     "A List View with many Text - Here's one!",
     "A List View with many Text - Here's another!",

@@ -7,7 +7,18 @@ void main() => runApp(MyApp());
 
 /// This Widget is the main application widget.
 ///
-class MyApp extends StatelessWidget {
+///
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _MyAppState();
+  }
+
+}
+
+class _MyAppState extends State<MyApp> {
   static const String _title = 'Flutter Code Sample';
 
   @override
