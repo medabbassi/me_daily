@@ -1,79 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/interfaces/flowAchievement.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:me_daily/interfaces/home.dart';
 import 'package:me_daily/interfaces/makeActivity.dart';
-import 'dart:async';
-void main() => runApp(MyApp());
+import 'package:me_daily/interfaces/flowAchievement.dart';
+import 'package:me_daily/interfaces/profile.dart';
 
-/// This Widget is the main application widget.
-///
-///
 
-class MyApp extends StatefulWidget {
+void main() => runApp(MaterialApp(home: BottomNavBar()));
+
+
+class BottomNavBar extends StatefulWidget {
+  static final String id = 'homescreen';
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _MyAppState();
-  }
-
+  _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class _MyAppState extends State<MyApp> {
-  static const String _title = 'Flutter Code Sample';
+class _BottomNavBarState extends State<BottomNavBar> {
+  PageController _pageController;
+ 
+  GlobalKey _bottomNavigationKey = GlobalKey();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pageController = PageController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
-        length: 4,
-        child: new Scaffold(
-          body: TabBarView(
-            children: <Widget>[
-              new Container(
-                //color: Colors.yellow,
-                child: HomeScreen(),
-              ),
-              new Container(
-                //color: Colors.orange,
-                child: MakeActivity(),
-              ),
-              new Container(
-                child: flowAchievement(),
-              ),
-              new Container(
-                color: Colors.red,
-              ),
-            ],
-          ),
-          bottomNavigationBar: new TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: new Icon(Icons.home),
-              ),
-              Tab(
-                icon: new Icon(Icons.calendar_today),
-              ),
-              Tab(
-                icon: new Icon(Icons.alarm),
-              ),
-              Tab(
-                icon: new Icon(Icons.person),
-              )
-
-            ],
-            labelColor: Colors.yellow,
-            unselectedLabelColor: Colors.blue,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorPadding: EdgeInsets.all(5.0),
-            indicatorColor: Colors.red,
-          ),
-          backgroundColor: Colors.grey[100],
+    return Scaffold(
+        bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: 3,
+          height: 50.0,
+          items: <Widget>[
+            Icon(Icons.home, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.trending_up, size: 30),
+            Icon(Icons.person, size: 30),
+          ],
+          color: Colors.white,
+          buttonBackgroundColor: Colors.white,
+          backgroundColor: Colors.blueAccent,
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+          onTap: (index) {
+            setState(() {
+              _pageController.jumpToPage(index);
+            });
+          },
         ),
-      ),
+
+        body: PageView(
+          controller: _pageController,
+          children: <Widget>[
+            HomeScreen(),
+            MakeActivity(),
+            flowAchievement(),
+            Profile(),
+          ],
+          onPageChanged: (int index) {
+            setState(() {
+              _pageController.jumpToPage(index);
+            });
+          },
+        )
     );
   }
 }
-
-
