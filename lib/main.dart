@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:me_daily/interfaces/flowAchievement.dart';
 import 'package:me_daily/interfaces/home.dart';
 import 'package:me_daily/interfaces/makeActivity.dart';
-import 'package:me_daily/interfaces/flowAchievement.dart';
 import 'package:me_daily/interfaces/profile.dart';
 
 
@@ -32,7 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
-          index: 3,
+          index: 0,
           height: 50.0,
           items: <Widget>[
             Icon(Icons.home, size: 30),

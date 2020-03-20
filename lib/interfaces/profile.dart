@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -13,7 +16,155 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          // background image and bottom contents
+          Column(
+            children: <Widget>[
+              Container(
+                height: 200.0,
+                color: Colors.orange,
+                child: Center(
+                  child: Text('Background image goes here'),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Card(
+                            elevation: 4.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            margin: const EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(height: 60.0),
+                                  Text(
+                                    'username goes here'.toUpperCase(),
+                                    style: TextStyle(
+                                      fontWeight:
+                                      FontWeight.bold,
+                                      fontFamily: 'Roboto',
+                                      fontSize: 19.0,
 
+                                    ),
+                                  ),
+                                  SizedBox(height: 2.0),
+                                  Text(
+                                    'Name'.toUpperCase(),
+
+                                    style: TextStyle(
+                                        fontWeight:
+                                        FontWeight.normal,
+                                        fontFamily: 'Roboto',
+                                        fontSize: 14.0,
+                                        color: Colors.grey
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Row(
+
+                                    children: <Widget>[
+                                      SizedBox(width: 15.0),
+                                      Column(
+
+                                        children: <Widget>[
+
+                                          Text(
+                                            'username goes here'.toUpperCase(),
+                                            style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15.0,
+
+                                            ),
+                                          ),
+                                          SizedBox(height: 2.0),
+                                          Text(
+                                            'Name'.toUpperCase(),
+
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.normal,
+                                                fontFamily: 'Roboto',
+                                                fontSize: 13.0,
+                                                color: Colors.grey
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(width: 20.0),
+                                      Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'username goes here'.toUpperCase(),
+                                            style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15.0,
+
+                                            ),
+                                          ),
+                                          SizedBox(height: 2.0),
+                                          Text(
+                                            'Name'.toUpperCase(),
+
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.normal,
+                                                fontFamily: 'Roboto',
+                                                fontSize: 13.0,
+                                                color: Colors.grey
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+
+                                  ),
+                                  SizedBox(height: 15.0),
+                                ],
+                              ),
+                            ),
+
+
+                          ),
+                          Card(
+
+                          )
+
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          // Profile image
+          Positioned(
+            top: 130.0, // (background container size) - (circle height / 2)
+            child: Container(
+              height: 130.0,
+              width: 130.0,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.green
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
+
 }
+
