@@ -138,7 +138,11 @@ class _ProfileState extends State<Profile> {
 
                           ),
                           Card(
-
+                            elevation: 10.0,
+                            child: Column(
+                              children: <Widget>[
+                              ],
+                            ),
                           )
 
                         ],
