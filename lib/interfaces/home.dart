@@ -1,59 +1,130 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
+import'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
+import 'package:me_daily/module/tip.dart';
+import 'package:me_daily/widget/loadImage.dart';
 
 bool liked = false;
 
+class HomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _HomeScreenState();
+  }
+
+}
+
+bool isLiked = false;
 
 // ignore: must_be_immutable
-class HomeScreen extends StatelessWidget {
+class _HomeScreenState extends State<HomeScreen> {
   bool liked = false;
+  int currentIndex = 0;
+  bool isTipVisible = false;
+  bool isLiked = false;
+  AnimationController _controller;
 
-  _pressed() {
-    setState();
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  Tip tip = new Tip('Drink Water At The Right Time',
+      bulletPoints: [
+        '2 Cups after waking up',
+        '1 Cup 30 mn before a meal',
+        '1 Cup before taking a bath.',
+        '1 Cup before going to bed.'
+      ],
+      isVisible: true);
+
+  @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery
+        .of(context)
+        .size
+        .width;
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Me Daily'),
-        backgroundColor: Colors.orangeAccent,
-      ),
+
+
       body: Container(
         margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
         padding: EdgeInsets.all(5.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
+              child: getToolBar(),
+            ),
             Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Welcome Name here',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16,
-                ),
+              child: Row(
+                children: <Widget>[
+                  SvgPicture.asset(
+                    'assets/images/cloudy.svg',
+                    height: 52,
+                    width: 52,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                                fontSize: 22,
+                              ),
+                              text: 'Morning, ',
+                            ),
+                            TextSpan(
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: 22,
+                              ),
+                              text: '',
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        'Wednesday, 25 March 2020',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
+            ),
 
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Welcome Name here',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 10,
-                ),
-              ),
-            ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 15.0),
             CarouselSlider(
               height: 160.0,
               enlargeCenterPage: true,
@@ -86,12 +157,16 @@ class HomeScreen extends StatelessWidget {
               }).toList(),
             ),
             SizedBox(height: 12.0),
-            Text(
-              'Friends similair activity',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 17.0,
-                fontWeight: FontWeight.normal,
+            Align(
+
+              child: Text(
+                'My Activities',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'roboto'
+                ),
               ),
             ),
             SizedBox(height: 10.0),
@@ -110,76 +185,13 @@ class HomeScreen extends StatelessWidget {
                   height: 100,
                   child: Row(
                     children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          '',
-                          fit: BoxFit.fill,
-                          width: 80,
-                          height: 80,
-                        ),
-                      ),
-                      Column(children: <Widget>[
-                        new Align(
-                          alignment: Alignment.centerLeft,
-                          child: new Text(
-                            'John Blavik',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.0),
-                          ),
-                        ),
-                        SizedBox(height: 8.0),
-                        new Align(
-                          alignment: Alignment.centerLeft,
-                          child: new Text(
-                            'palying sport ',
-                            style: TextStyle(
-                                color: Colors.grey[300],
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10.0),
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                      ]),
-                      new Align(
-                        alignment: Alignment.bottomRight,
-                        child: IconButton(
-                          icon: Icon(
-                            liked ? Icons.favorite : Icons.favorite_border,
-                            color: liked ? Colors.pinkAccent : Colors.grey,
-                          ),
-                          iconSize: 20.0,
-                          onPressed: _pressed(),
-                        ),
-                      ),
                     ],
                   ),
                 ),
               ),
             ),
             SizedBox(height: 15.0),
-            Card(
 
-              child: InkWell(
-
-                splashColor: Colors.deepOrangeAccent[100],
-                hoverColor: Colors.deepOrange,
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  print('card clickedd');
-                },
-                child: Container(
-                  foregroundDecoration: BoxDecoration(
-
-                  ),
-                  height: 120,
-                  width: 350,
-                  color: Colors.deepOrangeAccent[100],
-                ),
-              ),
-            )
           ],
         ),
       ),
@@ -189,14 +201,127 @@ class HomeScreen extends StatelessWidget {
           print('presssed flatbutton');
         },
         child: Icon(Icons.add),
-        backgroundColor: Colors.white70,
+        backgroundColor: Colors.greenAccent,
       ),
     );
   }
-
-  void setState() {
-    bool liked = false;
-
-    liked != liked;
-  }
 }
+
+
+Widget getToolBar() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+
+      Row(
+        children: <Widget>[
+
+          SizedBox(
+            width: 18.0,
+          ),
+          SvgPicture.asset('assets/images/bell.svg',
+              color: Colors.black, width: 20, height: 20),
+          SizedBox(
+            width: 8.0,
+          ),
+          Image.network(
+            "https://drive.google.com/uc?export=view&id=1bcQaCdWNUsXF2he704ZfUrofxw6KV9KH",
+            width: 30,
+            height: 30,
+          ),
+        ],
+      )
+    ],
+  );
+}
+
+Widget getTip(Tip tip) {
+  return Card(
+    margin: EdgeInsets.all(0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16.0),
+    ),
+    child: Container(
+      width: size,
+      margin: EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(16.0),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+
+                  SizedBox(
+                    width: 12.0,
+                  ),
+                  Text(
+                    'Tip Of The Day',
+                    style:
+                    TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                  ),
+                ],
+              ),
+              InkWell(
+                onTap: () {}
+                ,
+                child: Icon(
+                  Icons.close,
+                  size: 16,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Text(
+            tip.title,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 16.0,
+                    ),
+
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: InkWell(
+              onTap: () {
+
+              },
+
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+

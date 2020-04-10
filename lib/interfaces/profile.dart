@@ -12,6 +12,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  String _name, _email, _phoneNumber;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -77,7 +79,7 @@ class _ProfileState extends State<Profile> {
                                         children: <Widget>[
 
                                           Text(
-                                            'username goes here'.toUpperCase(),
+                                            'email goes here'.toUpperCase(),
                                             style: TextStyle(
                                               fontWeight:
                                               FontWeight.bold,
@@ -88,7 +90,7 @@ class _ProfileState extends State<Profile> {
                                           ),
                                           SizedBox(height: 2.0),
                                           Text(
-                                            'Name'.toUpperCase(),
+                                            'email'.toUpperCase(),
 
                                             style: TextStyle(
                                                 fontWeight:
@@ -104,7 +106,8 @@ class _ProfileState extends State<Profile> {
                                       Column(
                                         children: <Widget>[
                                           Text(
-                                            'username goes here'.toUpperCase(),
+                                            'phone number goes here'
+                                                .toUpperCase(),
                                             style: TextStyle(
                                               fontWeight:
                                               FontWeight.bold,
@@ -115,7 +118,7 @@ class _ProfileState extends State<Profile> {
                                           ),
                                           SizedBox(height: 2.0),
                                           Text(
-                                            'Name'.toUpperCase(),
+                                            'Phone Number'.toUpperCase(),
 
                                             style: TextStyle(
                                                 fontWeight:
@@ -137,13 +140,59 @@ class _ProfileState extends State<Profile> {
 
 
                           ),
+
                           Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                             elevation: 10.0,
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.info, size: 45,
+                                      color: Colors.greenAccent),
+                                  title: Text('About Us'),
+                                  trailing: Icon(Icons.keyboard_arrow_right),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 0.0),
+                                  onTap: () {}
+                                  ,
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.security, size: 45,
+                                      color: Colors.greenAccent),
+                                  title: Text('Privacy'),
+                                  trailing: Icon(Icons.keyboard_arrow_right),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 0.0),
+                                  onTap: () {}
+                                  ,
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.feedback, size: 45,
+                                      color: Colors.greenAccent),
+                                  title: Text('Give Us Feedback'),
+                                  trailing: Icon(Icons.keyboard_arrow_right),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 0.0),
+                                  onTap: () {}
+                                  ,
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.delete_forever, size: 45,
+                                      color: Colors.greenAccent),
+                                  title: Text('Wipe data'),
+                                  trailing: Icon(Icons.keyboard_arrow_right),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 0.0),
+                                  onTap: () {}
+                                  ,
+                                ),
+
                               ],
                             ),
-                          )
+                          ),
 
                         ],
                       ),
@@ -171,4 +220,5 @@ class _ProfileState extends State<Profile> {
   }
 
 }
+
 
