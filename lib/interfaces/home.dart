@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
 import 'package:me_daily/module/tip.dart';
 import 'package:me_daily/widget/loadImage.dart';
+import 'package:unicorndial/unicorndial.dart';
 
 bool liked = false;
 
@@ -52,10 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _size = MediaQuery
-        .of(context)
-        .size
-        .width;
+
     // TODO: implement build
     return Scaffold(
 
@@ -71,6 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
               const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
               child: getToolBar(),
             ),
+
+            SizedBox(height: 8.0),
             Align(
               child: Row(
                 children: <Widget>[
@@ -138,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             .width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
-                            color: Colors.blueGrey,
+                            color: Colors.greenAccent,
                             borderRadius: BorderRadius.circular(12.0)),
                         child: Center(
                           child: Text(
@@ -147,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             style: TextStyle(
                               fontSize: 20.0,
+                              fontWeight: FontWeight.w500,
                               color: Colors.white,
 
                             ),
@@ -170,38 +168,115 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 10.0),
-            Card(
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                borderRadius: BorderRadius.circular(10.0),
-                onTap: () {
-                  print('card clicked');
-                },
+            Align(
+              child: Card(
+                margin: EdgeInsets.all(0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0)
+                ),
                 child: Container(
-
-                  margin: EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
-                  padding: EdgeInsets.all(10.0),
-                  width: 350,
-                  height: 100,
-                  child: Row(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  margin: EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(16.0)
+                      )
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SvgPicture.asset(
+                                'assets/images/calendar.svg',
+                                height: 30,
+                                width: 30,
+                              ),
+                              SizedBox(width: 12.0),
+                              Text(
+                                'My plans for today',
+                                style:
+                                TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          InkWell(
+                            onTap: () =>
+                                setState(() {
+                                  tip.isVisible = false;
+                                }),
+                            child: Icon(
+                              Icons.close,
+                              size: 16,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        tip.title,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                Text(
+                                  "Do it quickly",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
+
                 ),
               ),
             ),
-            SizedBox(height: 15.0),
-
+            SizedBox(height: 1.0),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: getMessagesAndEmail(),
+              ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-          print('presssed flatbutton');
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.greenAccent,
+
+      floatingActionButton: UnicornDialer(
+        parentButtonBackground: Colors.greenAccent[700],
+        orientation: UnicornOrientation.HORIZONTAL,
+        parentButton: Icon(Icons.add),
+        childButtons: _getProfileMenu(),
       ),
     );
   }
@@ -210,7 +285,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
 Widget getToolBar() {
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
     children: <Widget>[
 
       Row(
@@ -224,10 +301,13 @@ Widget getToolBar() {
           SizedBox(
             width: 8.0,
           ),
-          Image.network(
+          LoadImage(
             "https://drive.google.com/uc?export=view&id=1bcQaCdWNUsXF2he704ZfUrofxw6KV9KH",
-            width: 30,
-            height: 30,
+            30,
+            30,
+            0,
+            30,
+            30,
           ),
         ],
       )
@@ -235,93 +315,72 @@ Widget getToolBar() {
   );
 }
 
-Widget getTip(Tip tip) {
+Size screenSize(BuildContext context) {
+  return MediaQuery
+      .of(context)
+      .size;
+}
+
+/*Widget getTip(Tip tip) {
   return Card(
     margin: EdgeInsets.all(0),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16.0),
     ),
-    child: Container(
-      width: size,
-      margin: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(16.0),
+    child:
+  );
+}*/
+Widget getMessagesAndEmail() {
+  return Container(
+      child: Card(
+
+        margin: EdgeInsets.all(0),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0)
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
 
-                  SizedBox(
-                    width: 12.0,
-                  ),
-                  Text(
-                    'Tip Of The Day',
-                    style:
-                    TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {}
-                ,
-                child: Icon(
-                  Icons.close,
-                  size: 16,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            tip.title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Row(
+        child: Column(
+          children: <Widget>[
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 16.0,
-                    ),
-
-                  ],
-                ),
               ],
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: InkWell(
-              onTap: () {
-
-              },
-
+            Text(
+              'Recent messages',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
             ),
-          ),
-        ],
-      ),
-    ),
+            SizedBox(height: 10.0),
+            Text(
+              'Recent email',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
+      )
+
   );
+}
+
+Widget _profileOption({IconData iconData, Function onPressed}) {
+  return UnicornButton(
+      currentButton: FloatingActionButton(
+        backgroundColor: Colors.greenAccent[500],
+        mini: true,
+        child: Icon(iconData),
+        onPressed: onPressed,
+      ));
+}
+
+List<UnicornButton> _getProfileMenu() {
+  List<UnicornButton> children = [];
+
+  // Add Children here
+  children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {}));
+  children.add(_profileOption(iconData: Icons.email, onPressed: () {}));
+  children.add(_profileOption(iconData: Icons.message, onPressed: () {}));
+
+  return children;
 }
 
