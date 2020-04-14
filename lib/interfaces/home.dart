@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/module/tip.dart';
+import 'package:me_daily/widget/loadDialogtoMakeActivity.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
 
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _HomeScreenState();
+    return HomeScreenState();
   }
 
 }
@@ -20,13 +21,29 @@ class HomeScreen extends StatefulWidget {
 bool isLiked = false;
 
 // ignore: must_be_immutable
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   bool liked = false;
   int currentIndex = 0;
   bool isTipVisible = false;
   bool isLiked = false;
   AnimationController _controller;
 
+  List<UnicornButton> _getProfileMenu() {
+    List<UnicornButton> children = [];
+
+    // Add Children here
+    children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {}));
+    children.add(_profileOption(iconData: Icons.email, onPressed: () {}));
+    children.add(_profileOption(iconData: Icons.message, onPressed: () {
+      print("pressed");
+    }));
+    children.add(_profileOption(iconData: Icons.directions_walk, onPressed: () {
+      DialogState().showDialogBox(context);
+      print("pressed");
+    }));
+
+    return children;
+  }
   @override
   void initState() {
     super.initState();
@@ -137,19 +154,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                             color: Colors.greenAccent,
                             borderRadius: BorderRadius.circular(12.0)),
-                        child: Center(
-                          child: Text(
-                            'text $i',
-                            textAlign: TextAlign.center,
+                        child: Column(
 
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
 
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 16.0,
+                                      ),
+                                      Text(
+                                        "11:00-12:00",
+                                        style: TextStyle(fontSize: 30.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ));
+                            SizedBox(height: 10.0),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        "Complete dev my app",
+                                        style: TextStyle(fontSize: 20.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                    );
                   },
                 );
               }).toList(),
@@ -263,10 +331,47 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 1.0),
             Container(
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: getMessagesAndEmail(),
-              ),
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                child: Card(
+
+                  margin: EdgeInsets.all(12.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0)
+                  ),
+
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                        ],
+                      ),
+
+
+                      new ListTile(
+                        leading: const Icon(Icons.query_builder),
+                        title: const Text('Recent email',
+                          style: TextStyle(fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              backgroundColor: Colors.white70),),
+                        subtitle: const Text('none'),
+                      ),
+                      SizedBox(height: 10.0),
+                      new ListTile(
+                        leading: const Icon(Icons.query_builder),
+                        title: const Text('Recent messages',
+                          style: TextStyle(fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              backgroundColor: Colors.white70),),
+                        subtitle: const Text('none'),
+                      ),
+                    ],
+                  ),
+                )
             ),
           ],
         ),
@@ -330,38 +435,7 @@ Size screenSize(BuildContext context) {
     child:
   );
 }*/
-Widget getMessagesAndEmail() {
-  return Container(
-      child: Card(
 
-        margin: EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0)
-        ),
-
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-              ],
-            ),
-            Text(
-              'Recent messages',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              'Recent email',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-      )
-
-  );
-}
 
 Widget _profileOption({IconData iconData, Function onPressed}) {
   return UnicornButton(
@@ -373,14 +447,6 @@ Widget _profileOption({IconData iconData, Function onPressed}) {
       ));
 }
 
-List<UnicornButton> _getProfileMenu() {
-  List<UnicornButton> children = [];
 
-  // Add Children here
-  children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {}));
-  children.add(_profileOption(iconData: Icons.email, onPressed: () {}));
-  children.add(_profileOption(iconData: Icons.message, onPressed: () {}));
 
-  return children;
-}
 
