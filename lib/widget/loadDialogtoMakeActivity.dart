@@ -23,11 +23,22 @@ class DialogState extends State<Dialog> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               color: Colors.black45,
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
+
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(),
+                      child:,
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+
+                  ],
+                )
+
             ),
           );
         });

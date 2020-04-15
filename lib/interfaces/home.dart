@@ -57,13 +57,20 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Tip tip = new Tip('Drink Water At The Right Time',
-      bulletPoints: [
-        '2 Cups after waking up',
-        '1 Cup 30 mn before a meal',
-        '1 Cup before taking a bath.',
-        '1 Cup before going to bed.'
-      ],
+      bulletPoints: [],
       isVisible: true);
+
+  Widget _profileOption({IconData iconData, Function onPressed}) {
+    return UnicornButton(
+
+        currentButton: FloatingActionButton(
+          backgroundColor: Colors.greenAccent[500],
+          mini: true,
+
+          child: Icon(iconData),
+          onPressed: onPressed,
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -379,7 +386,7 @@ class HomeScreenState extends State<HomeScreen> {
 
       floatingActionButton: UnicornDialer(
         parentButtonBackground: Colors.greenAccent[700],
-        orientation: UnicornOrientation.HORIZONTAL,
+        orientation: UnicornOrientation.VERTICAL,
         parentButton: Icon(Icons.add),
         childButtons: _getProfileMenu(),
       ),
@@ -437,15 +444,7 @@ Size screenSize(BuildContext context) {
 }*/
 
 
-Widget _profileOption({IconData iconData, Function onPressed}) {
-  return UnicornButton(
-      currentButton: FloatingActionButton(
-        backgroundColor: Colors.greenAccent[500],
-        mini: true,
-        child: Icon(iconData),
-        onPressed: onPressed,
-      ));
-}
+
 
 
 
