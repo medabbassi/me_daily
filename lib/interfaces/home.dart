@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/module/tip.dart';
-import 'package:me_daily/widget/loadDialogtoMakeActivity.dart';
+import 'package:me_daily/widget/addEntryDialog.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
 
@@ -28,6 +28,15 @@ class HomeScreenState extends State<HomeScreen> {
   bool isLiked = false;
   AnimationController _controller;
 
+  void _openAddEntryDialog() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new AddEntryDialog();
+        },
+        fullscreenDialog: true
+    ));
+  }
+
   List<UnicornButton> _getProfileMenu() {
     List<UnicornButton> children = [];
 
@@ -38,7 +47,8 @@ class HomeScreenState extends State<HomeScreen> {
       print("pressed");
     }));
     children.add(_profileOption(iconData: Icons.directions_walk, onPressed: () {
-      DialogState().showDialogBox(context);
+      //DialogState().showDialogBox(context);
+      _openAddEntryDialog();
       print("pressed");
     }));
 
@@ -64,9 +74,9 @@ class HomeScreenState extends State<HomeScreen> {
     return UnicornButton(
 
         currentButton: FloatingActionButton(
+          heroTag: null,
           backgroundColor: Colors.greenAccent[500],
           mini: true,
-
           child: Icon(iconData),
           onPressed: onPressed,
         ));
