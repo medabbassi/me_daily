@@ -1,10 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:intl/intl.dart';
-import 'package:numberpicker/numberpicker.dart';
-import 'package:date_format/date_format.dart';
-import 'dart:async';
+import 'package:me_daily/module/dailyMenu.dart';
+import 'package:meta/meta.dart';
 
 
 class AddEntryDialog extends StatefulWidget {
@@ -14,6 +14,35 @@ class AddEntryDialog extends StatefulWidget {
 
 class AddEntryDialogState extends State<AddEntryDialog> {
   DateTime _dateTime = new DateTime.now();
+  List<DailyMenu> _dailMenus = DailyMenu.getMenu();
+  List<DropdownMenuItem<DailyMenu>> _dropDownMenuItems;
+  DailyMenu _selectedDailyMenu;
+
+  @override
+  void initState() {
+    _dropDownMenuItems = buildDropdownMenuItems(_dailMenus);
+    _selectedDailyMenu = _dropDownMenuItems[0].value;
+    super.initState();
+  }
+
+  List<DropdownMenuItem<DailyMenu>> buildDropdownMenuItems(List dailyMenus) {
+    List<DropdownMenuItem<DailyMenu>> items = List();
+    for (DailyMenu dailyMenu in dailyMenus) {
+      items.add(
+        DropdownMenuItem(
+          value: dailyMenu,
+          child: Text(dailyMenu.name),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownItem(DailyMenu selectedCompany) {
+    setState(() {
+      _selectedDailyMenu = selectedCompany;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +106,12 @@ class AddEntryDialogState extends State<AddEntryDialog> {
           SizedBox(height: 8.0),
           new ListTile(
             leading: new Icon(Icons.replay, color: Colors.green),
-            title:,
+            title: DropdownButton(
+              value: _selectedDailyMenu,
+              items: _dropDownMenuItems,
+              onChanged: onChangeDropdownItem,
+            ),
+
           )
         ],
       ),
