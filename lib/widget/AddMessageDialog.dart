@@ -3,16 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
-class AddEmailDialog extends StatefulWidget {
+class AddMessageDialog extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return AddEmailDialogState();
+    return AddMessageDialogState();
   }
 }
 
-class AddEmailDialogState extends State<AddEmailDialog> {
+class AddMessageDialogState extends State<AddMessageDialog> {
   DateTime _dateTime = new DateTime.now();
 
   @override
@@ -20,7 +19,7 @@ class AddEmailDialogState extends State<AddEmailDialog> {
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
-        title: const Text('Add email'),
+        title: const Text('Add Message'),
         actions: <Widget>[
           new FlatButton(
             onPressed: () {},
@@ -39,24 +38,19 @@ class AddEmailDialogState extends State<AddEmailDialog> {
         children: <Widget>[
           SizedBox(height: 8.0),
           new ListTile(
-              leading: new Icon(Icons.alternate_email),
+              leading: new Icon(Icons.contact_phone),
               title: TextField(
-                decoration: InputDecoration(
-                    hintText: "Recipient Email"
-                ),
+                decoration: InputDecoration(hintText: "Recipient phone Number"),
               )),
           SizedBox(height: 8.0),
           new ListTile(
-              leading: new Icon(Icons.create),
-              title: _buildTextField()),
+              leading: new Icon(Icons.create), title: _buildTextField()),
           SizedBox(height: 8.0),
           new ListTile(
             leading: new Icon(Icons.today),
             title: Text(
               'Schedule to Sent',
-              style: TextStyle(
-                  fontWeight: FontWeight.w900, fontSize: 14.0
-              ),
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14.0),
             ),
             subtitle: new DateTimeItem(
                 dateTime: _dateTime,
@@ -67,7 +61,6 @@ class AddEmailDialogState extends State<AddEmailDialog> {
     );
   }
 }
-
 
 Widget _buildTextField() {
   final maxLines = 6;
@@ -138,7 +131,7 @@ class DateTimeItem extends StatelessWidget {
 
   Future _showTimePicker(BuildContext context) async {
     TimeOfDay timeOfDay =
-    await showTimePicker(context: context, initialTime: time);
+        await showTimePicker(context: context, initialTime: time);
 
     if (timeOfDay != null) {
       onChanged(new DateTime(

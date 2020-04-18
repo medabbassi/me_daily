@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/module/tip.dart';
+import 'package:me_daily/widget/AddMessageDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
+import 'package:me_daily/widget/addEmailDialog.dart';
 
 bool liked = false;
 
@@ -37,13 +39,38 @@ class HomeScreenState extends State<HomeScreen> {
     ));
   }
 
+  void _openAddEmailDialog() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new AddEmailDialog();
+        },
+        fullscreenDialog: true
+    ));
+  }
+
+  void _openAddMessageDialog() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new AddMessageDialog();
+        },
+        fullscreenDialog: true
+    ));
+  }
+
+
   List<UnicornButton> _getProfileMenu() {
     List<UnicornButton> children = [];
 
     // Add Children here
-    children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {}));
-    children.add(_profileOption(iconData: Icons.email, onPressed: () {}));
+    children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {
+      print("pressed");
+    }));
+    children.add(_profileOption(iconData: Icons.email, onPressed: () {
+      _openAddEmailDialog();
+      print('pressed');
+    }));
     children.add(_profileOption(iconData: Icons.message, onPressed: () {
+      _openAddMessageDialog();
       print("pressed");
     }));
     children.add(_profileOption(iconData: Icons.directions_walk, onPressed: () {
