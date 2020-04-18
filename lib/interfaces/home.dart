@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/module/tip.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
+import 'package:me_daily/widget/addEmailDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
+import 'package:me_daily/widget/addNotificationSchedule.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
-import 'package:me_daily/widget/addEmailDialog.dart';
 
 bool liked = false;
 
@@ -57,6 +58,14 @@ class HomeScreenState extends State<HomeScreen> {
     ));
   }
 
+  void _openAddNotificationDialog() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new AddNotificationSchedule();
+        },
+        fullscreenDialog: true
+    ));
+  }
 
   List<UnicornButton> _getProfileMenu() {
     List<UnicornButton> children = [];
@@ -64,6 +73,7 @@ class HomeScreenState extends State<HomeScreen> {
     // Add Children here
     children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {
       print("pressed");
+      _openAddNotificationDialog();
     }));
     children.add(_profileOption(iconData: Icons.email, onPressed: () {
       _openAddEmailDialog();
