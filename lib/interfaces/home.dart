@@ -6,7 +6,6 @@ import 'package:me_daily/module/tip.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
 import 'package:me_daily/widget/addEmailDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
-import 'package:me_daily/widget/addNotificationSchedule.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
 
@@ -58,23 +57,12 @@ class HomeScreenState extends State<HomeScreen> {
     ));
   }
 
-  void _openAddNotificationDialog() {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return new AddNotificationSchedule();
-        },
-        fullscreenDialog: true
-    ));
-  }
 
   List<UnicornButton> _getProfileMenu() {
     List<UnicornButton> children = [];
 
     // Add Children here
-    children.add(_profileOption(iconData: Icons.add_alert, onPressed: () {
-      print("pressed");
-      _openAddNotificationDialog();
-    }));
+
     children.add(_profileOption(iconData: Icons.email, onPressed: () {
       _openAddEmailDialog();
       print('pressed');
@@ -453,7 +441,7 @@ Widget getToolBar() {
         children: <Widget>[
 
           SizedBox(
-            width: 18.0,
+            width: 10.0,
           ),
           SvgPicture.asset('assets/images/bell.svg',
               color: Colors.black, width: 20, height: 20),
@@ -474,11 +462,6 @@ Widget getToolBar() {
   );
 }
 
-Size screenSize(BuildContext context) {
-  return MediaQuery
-      .of(context)
-      .size;
-}
 
 /*Widget getTip(Tip tip) {
   return Card(
