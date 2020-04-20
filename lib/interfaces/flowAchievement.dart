@@ -1,6 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
 import'package:flutter_svg/flutter_svg.dart';
-import 'package:me_daily/module/weight_entry.dart';
 import 'package:me_daily/widget/loadImage.dart';
 // ignore: camel_case_types
 class flowAchievement extends StatefulWidget {
@@ -14,12 +16,19 @@ class flowAchievement extends StatefulWidget {
 
 // ignore: camel_case_types
 class _flowAchievementState extends State<flowAchievement> {
-  List<WeightEntry> weightSaves = new List();
-  ScrollController _listViewScrollController = new ScrollController();
-  double _itemExtent = 50.0;
+  math.Random random = new math.Random();
+
+  List<double> _generateRandomData(int count) {
+    List<double> result = <double>[];
+    for (int i = 0; i < count; i++) {
+      result.add(random.nextDouble() * 10);
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
+    var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -32,23 +41,19 @@ class _flowAchievementState extends State<flowAchievement> {
                 const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
                 child: getToolBar(),
               ),
-              new ListView.builder(
-                shrinkWrap: true,
-                reverse: true,
-                controller: _listViewScrollController,
-                itemCount: weightSaves.length,
-                itemBuilder: (buildContext, index) {
-                  //calculating difference
-                  double difference = index == 0
-                      ? 0.0
-                      : weightSaves[index].weight -
-                      weightSaves[index - 1].weight;
-                  return new InkWell(
-
-                  );
-                },
+              Container(
+                width: 300.0,
+                height: 100.0,
+                child: new Sparkline(
+                  data: data,
+                  lineColor: Colors.lightGreen[500],
+                  fillMode: FillMode.none,
+                  fillColor: Colors.lightGreen[200],
+                  pointsMode: PointsMode.all,
+                  pointSize: 5.0,
+                  pointColor: Colors.amber,
+                ),
               ),
-
             ],
           ),
         ),
