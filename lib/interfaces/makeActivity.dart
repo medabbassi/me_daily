@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import'package:flutter_svg/flutter_svg.dart';
+import 'package:me_daily/widget/loadImage.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 
 
 class MakeActivity extends StatefulWidget {
@@ -25,13 +28,18 @@ class _MakeActivityState extends State<MakeActivity> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Calendar'),
-      ),
+
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(5.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
+              child: getToolBar(),
+            ),
+            SizedBox(height: 8.0),
             TableCalendar(
               initialCalendarFormat: CalendarFormat.week,
               calendarStyle: CalendarStyle(
@@ -88,7 +96,45 @@ class _MakeActivityState extends State<MakeActivity> {
           ],
         ),
       ),
-    );;
+    );
   }
 
 }
+
+Widget getToolBar() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      IconButton(
+        icon: SvgPicture.asset('assets/images/menu.svg',
+            color: Colors.black, width: 20, height: 20),
+        onPressed: () {
+          print("object");
+        },
+      ),
+      Row(
+        children: <Widget>[
+          SvgPicture.asset('assets/images/search.svg',
+              color: Colors.black, width: 18, height: 18),
+          SizedBox(
+            width: 8.0,
+          ),
+          SvgPicture.asset('assets/images/bell.svg',
+              color: Colors.black, width: 20, height: 20),
+          SizedBox(
+            width: 8.0,
+          ),
+          LoadImage(
+            "https://drive.google.com/uc?export=view&id=1bcQaCdWNUsXF2he704ZfUrofxw6KV9KH",
+            30,
+            30,
+            0,
+            30,
+            30,
+          ),
+        ],
+      )
+    ],
+  );
+}
+
