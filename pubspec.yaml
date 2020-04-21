@@ -37,6 +37,7 @@ dependencies:
   intl: ^0.16.1
   table_calendar: ^2.2.3
   flutter_sparkline: ^0.1.0
+  percent_indicator: "^2.1.1"
 
 
 dev_dependencies:

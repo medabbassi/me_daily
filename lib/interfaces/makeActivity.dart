@@ -28,10 +28,12 @@ class _MakeActivityState extends State<MakeActivity> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-
+      backgroundColor: Colors.greenAccent,
       body: SingleChildScrollView(
+
         padding: EdgeInsets.all(5.0),
         child: Column(
+
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
@@ -43,7 +45,7 @@ class _MakeActivityState extends State<MakeActivity> {
             TableCalendar(
               initialCalendarFormat: CalendarFormat.week,
               calendarStyle: CalendarStyle(
-                  todayColor: Colors.greenAccent,
+                  todayColor: Colors.green,
                   selectedColor: Theme
                       .of(context)
                       .primaryColor,
@@ -54,7 +56,7 @@ class _MakeActivityState extends State<MakeActivity> {
               headerStyle: HeaderStyle(
                 centerHeaderTitle: true,
                 formatButtonDecoration: BoxDecoration(
-                  color: Colors.greenAccent,
+                  color: Colors.green,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 formatButtonTextStyle: TextStyle(color: Colors.white),
@@ -83,7 +85,7 @@ class _MakeActivityState extends State<MakeActivity> {
                         margin: const EdgeInsets.all(4.0),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: Colors.greenAccent,
+                            color: Colors.green,
                             borderRadius: BorderRadius.circular(10.0)),
                         child: Text(
                           date.day.toString(),

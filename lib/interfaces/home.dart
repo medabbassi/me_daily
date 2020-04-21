@@ -8,6 +8,7 @@ import 'package:me_daily/widget/addEmailDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
+import 'package:me_daily/theme/Colors/lightColor.dart';
 
 bool liked = false;
 
@@ -115,6 +116,7 @@ class HomeScreenState extends State<HomeScreen> {
 
 
       body: Container(
+        color: Colors.greenAccent,
         margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
         padding: EdgeInsets.all(5.0),
         child: Column(
@@ -194,7 +196,7 @@ class HomeScreenState extends State<HomeScreen> {
                             .width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
-                            color: Colors.greenAccent,
+                            color: Colors.green,
                             borderRadius: BorderRadius.circular(12.0)),
                         child: Column(
 
@@ -265,18 +267,15 @@ class HomeScreenState extends State<HomeScreen> {
               }).toList(),
             ),
             SizedBox(height: 12.0),
-            Align(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                subheading('My Activities'),
 
-              child: Text(
-                'My Activities',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'roboto'
-                ),
-              ),
+              ],
             ),
+
             SizedBox(height: 10.0),
             Align(
               child: Card(
@@ -462,6 +461,16 @@ Widget getToolBar() {
   );
 }
 
+Text subheading(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+        color: LightColors.kDarkBlue,
+        fontSize: 20.0,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1.2),
+  );
+}
 
 /*Widget getTip(Tip tip) {
   return Card(

@@ -1,7 +1,10 @@
 import 'dart:ui';
-
+import 'package:me_daily/generated/i18n.dart';
+import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/widget/topContainer.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -16,209 +19,131 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    //TODO: implement build
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          // background image and bottom contents
-          Column(
-            children: <Widget>[
-              Container(
-                height: 200.0,
-                color: Colors.orange,
-                child: Center(
-                  child: Text('Background image goes here'),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Card(
-                            elevation: 4.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            margin: const EdgeInsets.only(top: 10.0),
-                            child: Center(
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(height: 60.0),
-                                  Text(
-                                    'username goes here'.toUpperCase(),
-                                    style: TextStyle(
-                                      fontWeight:
-                                      FontWeight.bold,
-                                      fontFamily: 'Roboto',
-                                      fontSize: 19.0,
-
-                                    ),
-                                  ),
-                                  SizedBox(height: 2.0),
-                                  Text(
-                                    'Name'.toUpperCase(),
-
-                                    style: TextStyle(
-                                        fontWeight:
-                                        FontWeight.normal,
-                                        fontFamily: 'Roboto',
-                                        fontSize: 14.0,
-                                        color: Colors.grey
-                                    ),
-                                  ),
-                                  SizedBox(height: 20.0),
-                                  Row(
-
-                                    children: <Widget>[
-                                      SizedBox(width: 15.0),
-                                      Column(
-
-                                        children: <Widget>[
-
-                                          Text(
-                                            'email goes here'.toUpperCase(),
-                                            style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold,
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15.0,
-
-                                            ),
-                                          ),
-                                          SizedBox(height: 2.0),
-                                          Text(
-                                            'email'.toUpperCase(),
-
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.normal,
-                                                fontFamily: 'Roboto',
-                                                fontSize: 13.0,
-                                                color: Colors.grey
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(width: 20.0),
-                                      Column(
-                                        children: <Widget>[
-                                          Text(
-                                            'phone number goes here'
-                                                .toUpperCase(),
-                                            style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold,
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15.0,
-
-                                            ),
-                                          ),
-                                          SizedBox(height: 2.0),
-                                          Text(
-                                            'Phone Number'.toUpperCase(),
-
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.normal,
-                                                fontFamily: 'Roboto',
-                                                fontSize: 13.0,
-                                                color: Colors.grey
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-
-                                  ),
-                                  SizedBox(height: 15.0),
-                                ],
+      backgroundColor: Colors.greenAccent,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            TopContainer(
+              height: 200,
+              width: width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Icon(Icons.menu,
+                          color: LightColors.kDarkBlue, size: 30.0),
+                      Icon(
+                        Icons.more,
+                        color: LightColors.kDarkBlue, size: 25.0,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 0, vertical: 0.0
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        CircularPercentIndicator(
+                          radius: 90.0,
+                          lineWidth: 5.0,
+                          animation: true,
+                          percent: 0.75,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          progressColor: LightColors.kRed,
+                          backgroundColor: LightColors.kDarkYellow,
+                          center: CircleAvatar(
+                            backgroundColor: LightColors.kBlue,
+                            radius: 35.0,
+                            backgroundImage: AssetImage(
+                              'assets/images/avatar.png',
+                            ),
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                "Mohamed Abbassi",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: LightColors.kDarkBlue,
+                                    fontWeight: FontWeight.w800
+                                ),
                               ),
                             ),
-
-
-                          ),
-
-                          Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
+                            SizedBox(height: 10.0),
+                            Container(
+                              child: Text(
+                                'mabbassix3@gmail.com',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                             ),
-                            elevation: 10.0,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ListTile(
-                                  leading: Icon(Icons.info, size: 45,
-                                      color: Colors.greenAccent),
-                                  title: Text('About Us'),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 0.0),
-                                  onTap: () {}
-                                  ,
+                            Container(
+                              child: Text(
+                                '+21650559630',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w400,
                                 ),
-                                ListTile(
-                                  leading: Icon(Icons.security, size: 45,
-                                      color: Colors.greenAccent),
-                                  title: Text('Privacy'),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 0.0),
-                                  onTap: () {}
-                                  ,
-                                ),
-                                ListTile(
-                                  leading: Icon(Icons.feedback, size: 45,
-                                      color: Colors.greenAccent),
-                                  title: Text('Give Us Feedback'),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 0.0),
-                                  onTap: () {}
-                                  ,
-                                ),
-                                ListTile(
-                                  leading: Icon(Icons.delete_forever, size: 45,
-                                      color: Colors.greenAccent),
-                                  title: Text('Wipe data'),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 0.0),
-                                  onTap: () {}
-                                  ,
-                                ),
-
-                              ],
-                            ),
-                          ),
-
-                        ],
-                      ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          // Profile image
-          Positioned(
-            top: 130.0, // (background container size) - (circle height / 2)
-            child: Container(
-              height: 130.0,
-              width: 130.0,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green
+                  )
+                ],
               ),
             ),
-          )
-        ],
+            Container(
+              width: width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>
+
+                ],
+              ),
+            )
+
+          ],
+        ),
       ),
+
+
     );
   }
 
 }
 
+Text subheading(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+        color: LightColors.kDarkBlue,
+        fontSize: 20.0,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1.2),
+  );
+}
 
