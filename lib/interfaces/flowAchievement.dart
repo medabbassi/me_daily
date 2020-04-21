@@ -41,19 +41,45 @@ class _flowAchievementState extends State<flowAchievement> {
                 const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
                 child: getToolBar(),
               ),
-              Container(
-                width: 300.0,
-                height: 100.0,
-                child: new Sparkline(
-                  data: data,
-                  lineColor: Colors.lightGreen[500],
-                  fillMode: FillMode.none,
-                  fillColor: Colors.lightGreen[200],
-                  pointsMode: PointsMode.all,
-                  pointSize: 5.0,
-                  pointColor: Colors.amber,
+              Padding(
+                padding:
+                const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
+                child:
+                Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: 150.0,
+                  child: new Sparkline(
+                    data: data,
+                    lineColor: Colors.lightGreen[500],
+                    fillMode: FillMode.none,
+                    fillColor: Colors.lightGreen[200],
+                    pointsMode: PointsMode.all,
+                    pointSize: 5.0,
+                    pointColor: Colors.amber,
+                  ),
                 ),
               ),
+              Padding(
+                padding:
+                const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+
+                      )
+                    ],
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
