@@ -1,8 +1,8 @@
 import 'dart:ui';
-import 'package:me_daily/generated/i18n.dart';
-import 'package:me_daily/theme/Colors/lightColor.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -120,7 +120,7 @@ class _ProfileState extends State<Profile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>
+                children: <Widget>[
 
                 ],
               ),
