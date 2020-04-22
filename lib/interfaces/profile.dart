@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -115,13 +116,42 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
+            SizedBox(height: 15.0),
             Container(
               width: width,
+              color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-
+                  ListTile(
+                    leading: new SvgPicture.asset(
+                        "assets/images/password.svg", height: 30.0, width: 30),
+                    title: subheading("Security"),
+                    trailing: IconButton(
+                      icon: Icon(Icons.settings), onPressed: () {},),
+                  ),
+                  ListTile(
+                    leading: new SvgPicture.asset(
+                        "assets/images/loan.svg", height: 30.0, width: 30),
+                    title: subheading("terms and privacy"),
+                    trailing: IconButton(
+                      icon: Icon(Icons.settings), onPressed: () {},),
+                  ),
+                  ListTile(
+                    leading: new SvgPicture.asset(
+                        "assets/images/clean.svg", height: 30.0, width: 30),
+                    title: subheading("Wipe my data"),
+                    trailing: IconButton(
+                      icon: Icon(Icons.settings), onPressed: () {},),
+                  ),
+                  ListTile(
+                    leading: new SvgPicture.asset(
+                        "assets/images/exit.svg", height: 30.0, width: 30),
+                    title: subheading("Log out"),
+                    trailing: IconButton(
+                      icon: Icon(Icons.settings), onPressed: () {},),
+                  ),
                 ],
               ),
             )

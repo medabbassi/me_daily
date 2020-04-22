@@ -28,7 +28,7 @@ class _MakeActivityState extends State<MakeActivity> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.white70,
       body: SingleChildScrollView(
 
         padding: EdgeInsets.all(5.0),

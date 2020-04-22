@@ -3,9 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import'package:flutter_svg/flutter_svg.dart';
-import 'package:me_daily/widget/loadImage.dart';
-import 'package:me_daily/widget/active_progress_cards.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
+import 'package:me_daily/widget/active_progress_cards.dart';
+import 'package:me_daily/widget/loadImage.dart';
 import 'package:me_daily/widget/tasks_column.dart';
 // ignore: camel_case_types
 class flowAchievement extends StatefulWidget {
@@ -60,7 +60,7 @@ class _flowAchievementState extends State<flowAchievement> {
 
       home: Scaffold(
         body: Container(
-          color: Colors.greenAccent,
+          color: Colors.white70,
           child: Column(
             children: <Widget>[
               Padding(

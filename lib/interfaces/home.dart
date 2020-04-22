@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/module/tip.dart';
+import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
 import 'package:me_daily/widget/addEmailDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
-import 'package:me_daily/theme/Colors/lightColor.dart';
 
 bool liked = false;
 
@@ -116,7 +116,7 @@ class HomeScreenState extends State<HomeScreen> {
 
 
       body: Container(
-        color: Colors.greenAccent,
+        color: Colors.white70,
         margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
         padding: EdgeInsets.all(5.0),
         child: Column(
@@ -128,7 +128,7 @@ class HomeScreenState extends State<HomeScreen> {
               child: getToolBar(),
             ),
 
-            SizedBox(height: 8.0),
+            SizedBox(height: 6.0),
             Align(
               child: Row(
                 children: <Widget>[
@@ -166,7 +166,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 6,
+                        height: 5,
                       ),
                       Text(
                         'Wednesday, 25 March 2020',
@@ -182,7 +182,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            SizedBox(height: 15.0),
+            SizedBox(height: 13.0),
             CarouselSlider(
               height: 160.0,
               enlargeCenterPage: true,
@@ -196,7 +196,7 @@ class HomeScreenState extends State<HomeScreen> {
                             .width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.greenAccent,
                             borderRadius: BorderRadius.circular(12.0)),
                         child: Column(
 
@@ -206,7 +206,7 @@ class HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0),
+                                  vertical: 9.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment
                                     .spaceEvenly,
@@ -266,7 +266,7 @@ class HomeScreenState extends State<HomeScreen> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 12.0),
+            SizedBox(height: 8.0),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -276,7 +276,7 @@ class HomeScreenState extends State<HomeScreen> {
               ],
             ),
 
-            SizedBox(height: 10.0),
+            SizedBox(height: 8.0),
             Align(
               child: Card(
                 margin: EdgeInsets.all(0),
@@ -335,7 +335,7 @@ class HomeScreenState extends State<HomeScreen> {
 
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 15.0,
                       ),
                       Text(
                         tip.title,
@@ -431,16 +431,21 @@ class HomeScreenState extends State<HomeScreen> {
 
 Widget getToolBar() {
   return Row(
-    crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
     children: <Widget>[
-
+      IconButton(
+        icon: SvgPicture.asset('assets/images/menu.svg',
+            color: Colors.black, width: 20, height: 20),
+        onPressed: () {
+          print("object");
+        },
+      ),
       Row(
         children: <Widget>[
-
+          SvgPicture.asset('assets/images/search.svg',
+              color: Colors.black, width: 18, height: 18),
           SizedBox(
-            width: 10.0,
+            width: 8.0,
           ),
           SvgPicture.asset('assets/images/bell.svg',
               color: Colors.black, width: 20, height: 20),
@@ -460,6 +465,7 @@ Widget getToolBar() {
     ],
   );
 }
+
 
 Text subheading(String title) {
   return Text(
