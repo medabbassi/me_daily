@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
-import 'package:me_daily/interfaces/lib/XD_Login1.dart';
+import 'package:me_daily/interfaces/login/login_page.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -157,7 +157,7 @@ class _ProfileState extends State<Profile> {
                   new FlatButton(onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => XD_Login1()),
+                      MaterialPageRoute(builder: (context) => Login()),
                     );
                   }, child: new Text(
                       'click me '
