@@ -1,27 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:me_daily/interfaces/register/register_page.dart';
+import 'package:flutter_svg/svg.dart';
 
 // Uncomment if you use injector package.
 // import 'package:my_app/framework/di/injector.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return LoginState();
+    return RegisterState();
   }
 }
 
-class LoginState extends State<Login> {
-  Color color = const Color(0x5FF9EF);
-  Color color2 = const Color(0x52D99E);
-
+class RegisterState extends State<Register> {
   // Insert into injector file if you use it.
-  // injector.map<LoginBloc>((i) => LoginBloc(i.get<Repository>()), isSingleton: true);
+  // injector.map<RegisterBloc>((i) => RegisterBloc(i.get<Repository>()), isSingleton: true);
 
   // Uncomment if you use injector.
-  // final _bloc = injector.get<LoginBloc>();
+  // final _bloc = injector.get<RegisterBloc>();
 
   @override
   void initState() {
@@ -40,11 +35,10 @@ class LoginState extends State<Login> {
         width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.greenAccent, Colors.lightGreenAccent],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)
-        ),
+            gradient: LinearGradient(
+                colors: [Colors.greenAccent, Colors.lightGreenAccent],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,15 +52,11 @@ class LoginState extends State<Login> {
             Opacity(
               opacity: 0.6,
               child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.all(18.0),
                 decoration: BoxDecoration(
                     color: Colors.grey[400],
-                    borderRadius: BorderRadius.all(Radius.circular(30.0))
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,13 +73,7 @@ class LoginState extends State<Login> {
                               fontSize: 25.0, color: Colors.white),
                         )),
                     new MaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Register()),
-                          );
-                        }
-                        ,
+                        onPressed: null,
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(22.0)),
@@ -98,25 +82,18 @@ class LoginState extends State<Login> {
                           style: new TextStyle(
                               fontSize: 25.0, color: Colors.white),
                         ))
-
                   ],
                 ),
               ),
             ),
             SizedBox(height: 10.0),
             Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              height: 200,
+              width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.all(12.0),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(30.0))
-              ),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0))),
               child: Column(
-
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ListTile(
@@ -125,9 +102,37 @@ class LoginState extends State<Login> {
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(
-                          hintText: 'email goes here'
-                      ),
+                      decoration: InputDecoration(hintText: 'email goes here'),
+                    ),
+                    trailing: SizedBox(width: 23),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.alternate_email),
+                    title: TextField(
+                      autofocus: true,
+                      autocorrect: true,
+                      cursorColor: Colors.amberAccent,
+                      decoration: InputDecoration(hintText: 'email goes here'),
+                    ),
+                    trailing: SizedBox(width: 23),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.alternate_email),
+                    title: TextField(
+                      autofocus: true,
+                      autocorrect: true,
+                      cursorColor: Colors.amberAccent,
+                      decoration: InputDecoration(hintText: 'email goes here'),
+                    ),
+                    trailing: SizedBox(width: 23),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.alternate_email),
+                    title: TextField(
+                      autofocus: true,
+                      autocorrect: true,
+                      cursorColor: Colors.amberAccent,
+                      decoration: InputDecoration(hintText: 'email goes here'),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
@@ -138,37 +143,34 @@ class LoginState extends State<Login> {
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(
-                          hintText: 'Password goes here'
-                      ),
+                      decoration:
+                          InputDecoration(hintText: 'Password goes here'),
                     ),
                     trailing: Icon(Icons.visibility),
                   ),
                   Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(padding: EdgeInsets.only(top: 35)),
-                          RaisedButton(
-                            onPressed: () {
-                              print('Login Pressed');
-                            },
-                            color: Colors.green,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            child: new Text('Login',
-                                style: new TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      )
-                  )
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.only(top: 0)),
+                      RaisedButton(
+                        onPressed: () {
+                          print('Login Pressed');
+                        },
+                        color: Colors.green,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                        child: new Text('Login',
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ))
                 ],
               ),
             ),
-
           ],
         ),
       ),
