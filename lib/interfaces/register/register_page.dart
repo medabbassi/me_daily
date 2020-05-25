@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:me_daily/interfaces/login/login_page.dart';
 
 // Uncomment if you use injector package.
 // import 'package:my_app/framework/di/injector.dart';
@@ -17,6 +18,11 @@ class RegisterState extends State<Register> {
 
   // Uncomment if you use injector.
   // final _bloc = injector.get<RegisterBloc>();
+  TextEditingController _controller1 = new TextEditingController();
+  TextEditingController _controller2 = new TextEditingController();
+  TextEditingController _controller3 = new TextEditingController();
+  TextEditingController _controller4 = new TextEditingController();
+  TextEditingController _controller5 = new TextEditingController();
 
   @override
   void initState() {
@@ -63,7 +69,12 @@ class RegisterState extends State<Register> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     new MaterialButton(
-                        onPressed: null,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()),
+                          );
+                        },
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(22.0)),
@@ -97,77 +108,86 @@ class RegisterState extends State<Register> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.alternate_email),
+                    leading: SizedBox(width: 23),
                     title: TextField(
+                      controller: _controller1,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(hintText: 'email goes here'),
+                      decoration: InputDecoration(hintText: 'First Name'),
+                      onSubmitted: (text) => print(_controller1.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   ListTile(
-                    leading: Icon(Icons.alternate_email),
+                    leading: SizedBox(width: 23),
                     title: TextField(
+                      controller: _controller2,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(hintText: 'email goes here'),
+                      decoration: InputDecoration(hintText: 'last NAME'),
+                      onSubmitted: (text) => print(_controller2.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   ListTile(
-                    leading: Icon(Icons.alternate_email),
+                    leading: SizedBox(width: 23),
                     title: TextField(
+                      controller: _controller3,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(hintText: 'email goes here'),
+                      decoration: InputDecoration(hintText: 'Email'),
+                      onSubmitted: (text) => print(_controller3.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   ListTile(
-                    leading: Icon(Icons.alternate_email),
+                    leading: SizedBox(width: 23),
                     title: TextField(
+                      controller: _controller4,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(hintText: 'email goes here'),
+                      decoration: InputDecoration(hintText: 'PhoneNumber'),
+                      onSubmitted: (text) => print(_controller4.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   SizedBox(height: 5),
                   ListTile(
-                    leading: Icon(Icons.vpn_key),
+                    leading: SizedBox(width: 23),
                     title: TextField(
+                      controller: _controller5,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration:
-                          InputDecoration(hintText: 'Password goes here'),
+                      decoration: InputDecoration(hintText: 'Password'),
+                      onSubmitted: (text) => print(_controller5.text),
                     ),
                     trailing: Icon(Icons.visibility),
                   ),
                   Center(
                       child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: 0)),
-                      RaisedButton(
-                        onPressed: () {
-                          print('Login Pressed');
-                        },
-                        color: Colors.green,
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
-                        child: new Text('Login',
-                            style: new TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ))
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(padding: EdgeInsets.only(top: 0)),
+                          RaisedButton(
+                            onPressed: () {
+                              print('Login Pressed');
+                            },
+                            color: Colors.green,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            child: new Text('Continue',
+                                style: new TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ],
+                      ))
                 ],
               ),
             ),
