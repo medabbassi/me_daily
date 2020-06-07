@@ -10,7 +10,6 @@ import 'package:me_daily/widget/addEmailDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
-import 'package:wiredash/wiredash.dart';
 
 bool liked = false;
 
@@ -119,29 +118,57 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Wiredash(
-        projectId: "medaily-sv02f28",
-        secret: "0e9hb8bra4uvp2611c948jxht1uvb0ww",
-        navigatorKey: _navigatorKey,
-        child: Scaffold(
-          body: Container(
-            color: Colors.white70,
-            margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
-            padding: EdgeInsets.all(5.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding:
-                  const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
-                  child: GestureDetector(
-                    onDoubleTap: () {
-                      Wiredash.of(context).show();
-                    },
-                    child: getToolBar(),
+    return Scaffold(
+      body: Container(
+        color: Colors.white70,
+        margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
+        padding: EdgeInsets.all(5.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Padding(
+                padding:
+                const EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    IconButton(
+                      icon: SvgPicture.asset('assets/images/menu.svg',
+                          color: Colors.black, width: 20, height: 20),
+                      onPressed: () {
+                        /* Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                          );*/
+                      },
+                    ),
+                    Row(
+                      children: <Widget>[
+                        SvgPicture.asset('assets/images/search.svg',
+                            color: Colors.black, width: 18, height: 18),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        SvgPicture.asset('assets/images/bell.svg',
+                            color: Colors.black, width: 20, height: 20),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        LoadImage(
+                          "https://drive.google.com/uc?export=view&id=1bcQaCdWNUsXF2he704ZfUrofxw6KV9KH",
+                          30,
+                          30,
+                          0,
+                          30,
+                          30,
+                        ),
+                      ],
+                    )
+                  ],
+                )
                     //getToolBar()
-                  ),
-                ),
+
+            ),
 
                 SizedBox(height: 6.0),
                 Align(
@@ -433,18 +460,16 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                 ),
-              ],
-            ),
-          ),
+          ],
+        ),
+      ),
 
-          floatingActionButton: UnicornDialer(
-            parentButtonBackground: Colors.greenAccent[700],
-            orientation: UnicornOrientation.VERTICAL,
-            parentButton: Icon(Icons.add),
-            childButtons: _getProfileMenu(),
-          ),
-        )
-
+      floatingActionButton: UnicornDialer(
+        parentButtonBackground: Colors.greenAccent[700],
+        orientation: UnicornOrientation.VERTICAL,
+        parentButton: Icon(Icons.add),
+        childButtons: _getProfileMenu(),
+      ),
     );
   }
 }
@@ -458,7 +483,6 @@ Widget getToolBar() {
         icon: SvgPicture.asset('assets/images/menu.svg',
             color: Colors.black, width: 20, height: 20),
         onPressed: () {
-          print("object");
         },
       ),
       Row(

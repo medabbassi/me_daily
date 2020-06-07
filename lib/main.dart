@@ -56,6 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           controller: _pageController,
           children: <Widget>[
             HomeScreen(),
+            //MyHomePage(),
             MakeActivity(),
             flowAchievement(),
             Profile(),
