@@ -24,6 +24,10 @@ class RegisterState extends State<Register> {
   TextEditingController _controller4 = new TextEditingController();
   TextEditingController _controller5 = new TextEditingController();
 
+  _OnPressed() {
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
