@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive/hive.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
+import 'package:path_provider/path_provider.dart';
 
 // Uncomment if you use injector package.
 // import 'package:my_app/framework/di/injector.dart';
@@ -18,19 +22,25 @@ class RegisterState extends State<Register> {
 
   // Uncomment if you use injector.
   // final _bloc = injector.get<RegisterBloc>();
-  TextEditingController _controller1 = new TextEditingController();
-  TextEditingController _controller2 = new TextEditingController();
-  TextEditingController _controller3 = new TextEditingController();
-  TextEditingController _controller4 = new TextEditingController();
-  TextEditingController _controller5 = new TextEditingController();
+  final TextEditingController _firstName = new TextEditingController();
+  final TextEditingController _lastName = new TextEditingController();
+  final TextEditingController _email = new TextEditingController();
+  final TextEditingController _phoneNumber = new TextEditingController();
+  final TextEditingController _password = new TextEditingController();
 
-  _OnPressed() {
-    setState(() {});
+  Box<String> usersBox;
+
+  void _OnPressed() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Directory document = await getApplicationDocumentsDirectory();
+    Hive.init(document.path);
+    await Hive.openBox<String>("Users");
   }
 
   @override
   void initState() {
     super.initState();
+    usersBox = Hive.box<String>("Users");
   }
 
   @override
@@ -114,48 +124,44 @@ class RegisterState extends State<Register> {
                   ListTile(
                     leading: SizedBox(width: 23),
                     title: TextField(
-                      controller: _controller1,
+                      controller: _firstName,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
                       decoration: InputDecoration(hintText: 'First Name'),
-                      onSubmitted: (text) => print(_controller1.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   ListTile(
                     leading: SizedBox(width: 23),
                     title: TextField(
-                      controller: _controller2,
+                      controller: _lastName,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
                       decoration: InputDecoration(hintText: 'last NAME'),
-                      onSubmitted: (text) => print(_controller2.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   ListTile(
                     leading: SizedBox(width: 23),
                     title: TextField(
-                      controller: _controller3,
+                      controller: _email,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
                       decoration: InputDecoration(hintText: 'Email'),
-                      onSubmitted: (text) => print(_controller3.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
                   ListTile(
                     leading: SizedBox(width: 23),
                     title: TextField(
-                      controller: _controller4,
+                      controller: _phoneNumber,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
                       decoration: InputDecoration(hintText: 'PhoneNumber'),
-                      onSubmitted: (text) => print(_controller4.text),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
@@ -163,12 +169,11 @@ class RegisterState extends State<Register> {
                   ListTile(
                     leading: SizedBox(width: 23),
                     title: TextField(
-                      controller: _controller5,
+                      controller: _password,
                       autofocus: true,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
                       decoration: InputDecoration(hintText: 'Password'),
-                      onSubmitted: (text) => print(_controller5.text),
                     ),
                     trailing: Icon(Icons.visibility),
                   ),
@@ -179,7 +184,8 @@ class RegisterState extends State<Register> {
                           Padding(padding: EdgeInsets.only(top: 0)),
                           RaisedButton(
                             onPressed: () {
-                              print('Login Pressed');
+                              final value = _email.toString();
+                              usersBox.add(value);
                             },
                             color: Colors.green,
                             shape: new RoundedRectangleBorder(
