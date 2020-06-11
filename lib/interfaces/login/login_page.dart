@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:me_daily/interfaces/home.dart';
 import 'package:me_daily/interfaces/register/register_page.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Uncomment if you use injector package.
 // import 'package:my_app/framework/di/injector.dart';
@@ -33,6 +39,10 @@ class LoginState extends State<Login> {
     super.dispose();
   }
 
+  bool _isLoading = false;
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -40,10 +50,10 @@ class LoginState extends State<Login> {
         width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.greenAccent, Colors.lightGreenAccent],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)
+            gradient: LinearGradient(
+                colors: [Colors.greenAccent, Colors.lightGreenAccent],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter)
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,10 +134,9 @@ class LoginState extends State<Login> {
                     title: TextField(
                       autofocus: true,
                       autocorrect: true,
+                      controller: emailController,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(
-                          hintText: 'email goes here'
-                      ),
+                      decoration: InputDecoration(hintText: 'email goes here'),
                     ),
                     trailing: SizedBox(width: 23),
                   ),
@@ -136,6 +145,7 @@ class LoginState extends State<Login> {
                     leading: Icon(Icons.vpn_key),
                     title: TextField(
                       autofocus: true,
+                      controller: passwordController,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
                       decoration: InputDecoration(
@@ -173,5 +183,33 @@ class LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  signIn(String email, pass) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Map data = {
+      'email': email,
+      'password': pass
+    };
+    var jsonResponse = null;
+    var response = await http.post("YOUR_BASE_URL", body: data);
+    if (response.statusCode == 200) {
+      jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        setState(() {
+          _isLoading = false;
+        });
+        sharedPreferences.setString("token", jsonResponse['token']);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (BuildContext context) => HomeScreen()), (
+            Route<dynamic> route) => false);
+      }
+    }
+    else {
+      setState(() {
+        _isLoading = false;
+      });
+      print(response.body);
+    }
   }
 }
