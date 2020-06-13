@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:me_daily/interfaces/home.dart';
-import 'package:me_daily/interfaces/register/register_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:me_daily/interfaces/profile.dart';
+import 'package:me_daily/interfaces/register/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Uncomment if you use injector package.
@@ -187,22 +186,24 @@ class LoginState extends State<Login> {
 
   signIn(String email, pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {
-      'email': email,
-      'password': pass
-    };
+    Map data = {'email': email, 'password': pass};
     var jsonResponse = null;
-    var response = await http.post("YOUR_BASE_URL", body: data);
+    var response =
+        await http.post("http://192.168.1.5:4000/api/auth", body: data);
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
           _isLoading = false;
         });
-        sharedPreferences.setString("token", jsonResponse['token']);
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-            builder: (BuildContext context) => HomeScreen()), (
-            Route<dynamic> route) => false);
+        sharedPreferences.setString("_id", jsonResponse['_id']);
+        sharedPreferences.setString("_id", jsonResponse['_id']);
+        sharedPreferences.setString("_id", jsonResponse['_id']);
+        sharedPreferences.setString("_id", jsonResponse['_id']);
+        sharedPreferences.setString("_id", jsonResponse['_id']);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (BuildContext context) => Profile()),
+            (Route<dynamic> route) => false);
       }
     }
     else {

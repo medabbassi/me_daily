@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
+import 'package:http/http.dart' as http;
+import 'package:me_daily/interfaces/home.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Uncomment if you use injector package.
 // import 'package:my_app/framework/di/injector.dart';
@@ -188,8 +193,8 @@ class RegisterState extends State<Register> {
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold)),
                           ),
-                        ],
-                      ))
+                    ],
+                  ))
                 ],
               ),
             ),
@@ -197,5 +202,33 @@ class RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  signUp(String fname, lname, email, pass, phone) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Map data = {
+      'first_name': fname,
+      'last_name': lname,
+      'email': email,
+      'password': pass,
+      'phone_number': phone
+    };
+    var jsonResponse = null;
+    var response = await http.post("localhost:4000/api/users", body: data);
+    if (response.statusCode == 200) {
+      jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        setState(() {});
+        sharedPreferences.setString("token", jsonResponse['token']);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+            (Route<dynamic> route) => false);
+      }
+    } else {
+      setState(() {
+        var _isLoading = false;
+      });
+      print(response.body);
+    }
   }
 }

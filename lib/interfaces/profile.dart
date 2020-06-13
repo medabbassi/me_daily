@@ -7,6 +7,7 @@ import 'package:me_daily/interfaces/login/login_page.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -17,7 +18,34 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String _name, _email, _phoneNumber;
+
+  String firstName;
+  String lastName;
+  String email;
+  String phoneNumber;
+
+  SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getString("_id") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => Login()), (
+          Route<dynamic> route) => false);
+    }
+    else {
+      firstName = sharedPreferences.getString("first_name");
+      lastName = sharedPreferences.getString("last_name");
+      email = sharedPreferences.getString("email");
+      phoneNumber = sharedPreferences.getString("phone_number");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,20 +104,34 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                              child: Text(
-                                "Mohamed Abbassi",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: LightColors.kDarkBlue,
-                                    fontWeight: FontWeight.w800
-                                ),
-                              ),
+
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      firstName,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: LightColors.kDarkBlue,
+                                          fontWeight: FontWeight.w800
+                                      ),
+                                    ),
+                                    Text(
+                                      lastName,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: LightColors.kDarkBlue,
+                                          fontWeight: FontWeight.w800
+                                      ),
+                                    ),
+                                  ],
+                                )
                             ),
                             SizedBox(height: 10.0),
                             Container(
                               child: Text(
-                                'mabbassix3@gmail.com',
+                                email,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 16.0,
@@ -100,7 +142,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             Container(
                               child: Text(
-                                '+21650559630',
+                                phoneNumber,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 16.0,
