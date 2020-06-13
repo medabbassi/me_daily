@@ -41,7 +41,6 @@ class LoginState extends State<Login> {
   bool _isLoading = false;
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -130,7 +129,7 @@ class LoginState extends State<Login> {
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.alternate_email),
-                    title: TextField(
+                    title: TextFormField(
                       autofocus: true,
                       autocorrect: true,
                       controller: emailController,
@@ -142,14 +141,13 @@ class LoginState extends State<Login> {
                   SizedBox(height: 5),
                   ListTile(
                     leading: Icon(Icons.vpn_key),
-                    title: TextField(
+                    title: TextFormField(
                       autofocus: true,
                       controller: passwordController,
                       autocorrect: true,
                       cursorColor: Colors.amberAccent,
-                      decoration: InputDecoration(
-                          hintText: 'Password goes here'
-                      ),
+                      decoration:
+                          InputDecoration(hintText: 'Password goes here'),
                     ),
                     trailing: Icon(Icons.visibility),
                   ),
@@ -161,6 +159,8 @@ class LoginState extends State<Login> {
                           RaisedButton(
                             onPressed: () {
                               print('Login Pressed');
+                              signIn(emailController.text,
+                                  passwordController.text);
                             },
                             color: Colors.green,
                             shape: new RoundedRectangleBorder(
@@ -184,12 +184,12 @@ class LoginState extends State<Login> {
     );
   }
 
-  signIn(String email, pass) async {
+  signIn(String email, String pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map data = {'email': email, 'password': pass};
     var jsonResponse = null;
     var response =
-        await http.post("http://192.168.1.5:4000/api/auth", body: data);
+    await http.post("http://192.168.1.5:4000/api/auth", body: data);
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
