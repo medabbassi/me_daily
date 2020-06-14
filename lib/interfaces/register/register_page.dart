@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:me_daily/interfaces/home.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
@@ -30,14 +29,10 @@ class RegisterState extends State<Register> {
   final TextEditingController _phoneNumber = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
 
-  Box<String> usersBox;
-
-  void _OnPressed() {}
-
   @override
   void initState() {
     super.initState();
-    usersBox = Hive.box<String>("Users");
+
   }
 
   @override
@@ -120,7 +115,7 @@ class RegisterState extends State<Register> {
                 children: <Widget>[
                   ListTile(
                     leading: SizedBox(width: 23),
-                    title: TextField(
+                    title: TextFormField(
                       controller: _firstName,
                       autofocus: true,
                       autocorrect: true,
@@ -131,7 +126,7 @@ class RegisterState extends State<Register> {
                   ),
                   ListTile(
                     leading: SizedBox(width: 23),
-                    title: TextField(
+                    title: TextFormField(
                       controller: _lastName,
                       autofocus: true,
                       autocorrect: true,
@@ -153,7 +148,7 @@ class RegisterState extends State<Register> {
                   ),
                   ListTile(
                     leading: SizedBox(width: 23),
-                    title: TextField(
+                    title: TextFormField(
                       controller: _phoneNumber,
                       autofocus: true,
                       autocorrect: true,
@@ -165,7 +160,7 @@ class RegisterState extends State<Register> {
                   SizedBox(height: 5),
                   ListTile(
                     leading: SizedBox(width: 23),
-                    title: TextField(
+                    title: TextFormField(
                       controller: _password,
                       autofocus: true,
                       autocorrect: true,
@@ -181,8 +176,9 @@ class RegisterState extends State<Register> {
                           Padding(padding: EdgeInsets.only(top: 0)),
                           RaisedButton(
                             onPressed: () {
-                              final value = _email.toString();
-                              usersBox.add(value);
+                              signUp(
+                                  _firstName.text, _lastName.text, _email.text,
+                                  _password.text, _phoneNumber.text);
                             },
                             color: Colors.green,
                             shape: new RoundedRectangleBorder(
@@ -214,15 +210,22 @@ class RegisterState extends State<Register> {
       'phone_number': phone
     };
     var jsonResponse = null;
-    var response = await http.post("localhost:4000/api/users", body: data);
+    var response = await http.post(
+        "http://192.168.1.5:4000/api/users", body: data);
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {});
-        sharedPreferences.setString("token", jsonResponse['token']);
+        sharedPreferences.setString("_id", jsonResponse['_id']);
+        sharedPreferences.setString('first_name', jsonResponse['first_name']);
+        sharedPreferences.setString('last_name', jsonResponse['last_name']);
+        sharedPreferences.setString('email', jsonResponse['email']);
+        sharedPreferences.setString(
+            'phone_number', jsonResponse['phone_number']);
+        print("Result: ${response.body}");
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
-            (Route<dynamic> route) => false);
+                (Route<dynamic> route) => false);
       }
     } else {
       setState(() {

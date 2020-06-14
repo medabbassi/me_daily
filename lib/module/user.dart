@@ -7,4 +7,5 @@ class User {
 
   User(this.firstName, this.lastName, this.email, this.phoneNumber,
       this.password);
+
 }

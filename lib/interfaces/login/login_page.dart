@@ -81,7 +81,12 @@ class LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     new MaterialButton(
-                        onPressed: null,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Register()),
+                          );
+                        },
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(22.0)),
@@ -168,8 +173,8 @@ class LoginState extends State<Login> {
                             child: new Text('Login',
                                 style: new TextStyle(
                                     color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold)),
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold)),
                           ),
                         ],
                       )
@@ -184,10 +189,11 @@ class LoginState extends State<Login> {
     );
   }
 
-  signIn(String email, String pass) async {
+  signIn(String email, pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map data = {'email': email, 'password': pass};
     var jsonResponse = null;
+
     var response =
     await http.post("http://192.168.1.5:4000/api/auth", body: data);
     if (response.statusCode == 200) {
@@ -196,14 +202,16 @@ class LoginState extends State<Login> {
         setState(() {
           _isLoading = false;
         });
-        sharedPreferences.setString("_id", jsonResponse['_id']);
-        sharedPreferences.setString("_id", jsonResponse['_id']);
-        sharedPreferences.setString("_id", jsonResponse['_id']);
-        sharedPreferences.setString("_id", jsonResponse['_id']);
-        sharedPreferences.setString("_id", jsonResponse['_id']);
+        sharedPreferences.setString('_id', jsonResponse['_id']);
+        sharedPreferences.setString('first_name', jsonResponse['first_name']);
+        sharedPreferences.setString('last_name', jsonResponse['last_name']);
+        sharedPreferences.setString('email', jsonResponse['email']);
+        sharedPreferences.setString(
+            'phone_number', jsonResponse['phone_number']);
+        print("Result: ${response.body}");
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => Profile()),
-            (Route<dynamic> route) => false);
+                (Route<dynamic> route) => false);
       }
     }
     else {

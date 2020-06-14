@@ -18,34 +18,35 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
-  String firstName;
-  String lastName;
-  String email;
-  String phoneNumber;
-
   SharedPreferences sharedPreferences;
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String phoneNumber = '';
 
   @override
   void initState() {
-    super.initState();
     checkLoginStatus();
+    super.initState();
   }
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getString("_id") == null) {
+      print(sharedPreferences.getString("_id"));
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => Login()), (
           Route<dynamic> route) => false);
-    }
-    else {
-      firstName = sharedPreferences.getString("first_name");
-      lastName = sharedPreferences.getString("last_name");
-      email = sharedPreferences.getString("email");
-      phoneNumber = sharedPreferences.getString("phone_number");
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      firstName = prefs.getString('first_name') ?? '';
+      lastName = prefs.getString('last_name') ?? '';
+      email = prefs.getString('email') ?? '';
+      phoneNumber = prefs.getString('phone_number') ?? '';
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +117,7 @@ class _ProfileState extends State<Profile> {
                                           fontWeight: FontWeight.w800
                                       ),
                                     ),
+                                    SizedBox(width: 4),
                                     Text(
                                       lastName,
                                       textAlign: TextAlign.start,
@@ -193,7 +195,13 @@ class _ProfileState extends State<Profile> {
                         "assets/images/exit.svg", height: 30.0, width: 30),
                     title: subheading("Log out"),
                     trailing: IconButton(
-                      icon: Icon(Icons.settings), onPressed: () {},),
+                      icon: Icon(Icons.settings), onPressed: () {
+                      sharedPreferences.clear();
+
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (BuildContext context) =>
+                              Login()), (Route<dynamic> route) => false);
+                    },),
                   ),
                   SizedBox(height: 12),
                   new FlatButton(onPressed: () {
