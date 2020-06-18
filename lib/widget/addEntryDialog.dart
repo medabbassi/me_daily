@@ -17,6 +17,9 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   List<DailyMenu> _dailMenus = DailyMenu.getMenu();
   List<DropdownMenuItem<DailyMenu>> _dropDownMenuItems;
   DailyMenu _selectedDailyMenu;
+  final TextEditingController titleController = new TextEditingController();
+  final TextEditingController descriptionController =
+      new TextEditingController();
 
   @override
   void initState() {
@@ -93,16 +96,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
             ),
           ),
           SizedBox(height: 8.0),
-          new ListTile(
-            leading: new Icon(Icons.room, color: Colors.green),
-            title: Text(
-              "Location",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            subtitle: Text(
-                "Tozeur"
-            ),
-          ),
+
           SizedBox(height: 8.0),
           new ListTile(
             leading: new Icon(Icons.replay, color: Colors.green),
