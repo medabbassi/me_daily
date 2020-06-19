@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:me_daily/Controllers/databasehelper.dart';
+import 'package:me_daily/models/activity.dart';
 import 'package:me_daily/module/dailyMenu.dart';
 import 'package:meta/meta.dart';
-
 
 class AddEntryDialog extends StatefulWidget {
   @override
@@ -13,13 +14,17 @@ class AddEntryDialog extends StatefulWidget {
 }
 
 class AddEntryDialogState extends State<AddEntryDialog> {
+  Activity activity;
+  DatabaseHelper helper;
   DateTime _dateTime = new DateTime.now();
   List<DailyMenu> _dailMenus = DailyMenu.getMenu();
   List<DropdownMenuItem<DailyMenu>> _dropDownMenuItems;
   DailyMenu _selectedDailyMenu;
-  final TextEditingController titleController = new TextEditingController();
-  final TextEditingController descriptionController =
+  final TextEditingController _titleController = new TextEditingController();
+  final TextEditingController _descriptionController =
       new TextEditingController();
+  final String time = '';
+  final String nbReapeats = "";
 
   @override
   void initState() {
@@ -47,6 +52,40 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     });
   }
 
+  void _save() async {
+    int result;
+    if (activity.id != null) { // Case 1: Update operation
+      result = await helper.updateTodo(activity);
+    } else { // Case 2: Insert Operation
+      result = await helper.insertTodo(activity);
+    }
+    if (result != 0) { // Success
+      _showAlertDialog('Status', 'Todo Saved Successfully');
+    } else { // Failure
+      _showAlertDialog('Status', 'Problem Saving Todo');
+    }
+  }
+
+  void updateTitle() {
+    activity.title = _titleController.text;
+  }
+
+  // Update the description of todo object
+  void updateDescription() {
+    activity.description = _descriptionController.text;
+  }
+
+  void _showAlertDialog(String title, String message) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    showDialog(
+        context: context,
+        builder: (_) => alertDialog
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -72,6 +111,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
           new ListTile(
             leading: SizedBox(width: 8.0),
             title: TextField(
+              controller: _titleController,
               decoration: InputDecoration(
 
                 hintText: "add title here",
@@ -90,6 +130,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
           new ListTile(
             leading: new Icon(Icons.subject, color: Colors.green),
             title: TextField(
+              controller: _descriptionController,
               decoration: InputDecoration(
                 hintText: "Description",
               ),
@@ -137,7 +178,8 @@ class DateTimeItem extends StatelessWidget {
             onTap: (() => _showDatePicker(context)),
             child: new Padding(
                 padding: new EdgeInsets.symmetric(vertical: 8.0),
-                child: new Text(new DateFormat('EEEE, MMMM d').format(date))),
+                child: new Text(
+                    new DateFormat('EEEE, MMMM , dd').format(date))),
           ),
         ),
         new InkWell(
@@ -172,4 +214,5 @@ class DateTimeItem extends StatelessWidget {
           date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute));
     }
   }
+
 }
