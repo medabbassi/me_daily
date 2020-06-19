@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:me_daily/models/activity.dart';
+import 'package:me_daily/models/email.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,12 +9,11 @@ class DatabaseHelper {
   static DatabaseHelper _databaseHelper; // Singleton DatabaseHelper
   static Database _database; // Singleton Database
 
-  String activityTable = 'activity_table';
+  String emailTable = 'email_table';
   String colId = 'id';
-  String colTitle = 'title';
+  String colRecipient = 'Recipient';
   String colDescription = 'description';
   String colDate = 'date';
-  int colNbRep = 'nbRepeats' as int;
 
   DatabaseHelper._createInstance(); // Named constructor to create instance of DatabaseHelper
 
@@ -36,7 +35,7 @@ class DatabaseHelper {
   Future<Database> initializeDatabase() async {
     // Get the directory path for both Android and iOS to store database.
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'activities.db';
+    String path = directory.path + 'emails.db';
 
     // Open/create the database at a given path
     var todosDatabase =
@@ -46,8 +45,8 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
     await db.execute(
-        'CREATE TABLE $activityTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, '
-        '$colDescription TEXT, $colDate TEXT)');
+        'CREATE TABLE $emailTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colRecipient TEXT, '
+            '$colDescription TEXT, $colDate TEXT)');
   }
 
   // Fetch Operation: Get all todo objects from database
@@ -55,29 +54,29 @@ class DatabaseHelper {
     Database db = await this.database;
 
 //		var result = await db.rawQuery('SELECT * FROM $todoTable order by $colTitle ASC');
-    var result = await db.query(activityTable, orderBy: '$colTitle ASC');
+    var result = await db.query(emailTable, orderBy: '$colRecipient ASC');
     return result;
   }
 
   // Insert Operation: Insert a todo object to database
-  Future<int> insertTodo(Activity activity) async {
+  Future<int> insertTodo(Email email) async {
     Database db = await this.database;
-    var result = await db.insert(activityTable, activity.toMap());
+    var result = await db.insert(emailTable, email.toMap());
     return result;
   }
 
   // Update Operation: Update a todo object and save it to database
-  Future<int> updateTodo(Activity activity) async {
+  Future<int> updateTodo(Email email) async {
     var db = await this.database;
-    var result = await db.update(activityTable, activity.toMap(),
-        where: '$colId = ?', whereArgs: [activity.id]);
+    var result = await db.update(emailTable, email.toMap(),
+        where: '$colId = ?', whereArgs: [email.id]);
     return result;
   }
 
-  Future<int> updateTodoCompleted(Activity activity) async {
+  Future<int> updateTodoCompleted(Email email) async {
     var db = await this.database;
-    var result = await db.update(activityTable, activity.toMap(),
-        where: '$colId = ?', whereArgs: [activity.id]);
+    var result = await db.update(emailTable, email.toMap(),
+        where: '$colId = ?', whereArgs: [email.id]);
     return result;
   }
 
@@ -85,7 +84,7 @@ class DatabaseHelper {
   Future<int> deleteTodo(int id) async {
     var db = await this.database;
     int result =
-        await db.rawDelete('DELETE FROM $activityTable WHERE $colId = $id');
+    await db.rawDelete('DELETE FROM $emailTable WHERE $colId = $id');
     return result;
   }
 
@@ -93,21 +92,21 @@ class DatabaseHelper {
   Future<int> getCount() async {
     Database db = await this.database;
     List<Map<String, dynamic>> x =
-        await db.rawQuery('SELECT COUNT (*) from $activityTable');
+    await db.rawQuery('SELECT COUNT (*) from $emailTable');
     int result = Sqflite.firstIntValue(x);
     return result;
   }
 
   // Get the 'Map List' [ List<Map> ] and convert it to 'todo List' [ List<Todo> ]
-  Future<List<Activity>> getTodoList() async {
+  Future<List<Email>> getTodoList() async {
     var todoMapList = await getTodoMapList(); // Get 'Map List' from database
     int count =
         todoMapList.length; // Count the number of map entries in db table
 
-    List<Activity> todoList = List<Activity>();
+    List<Email> todoList = List<Email>();
     // For loop to create a 'todo List' from a 'Map List'
     for (int i = 0; i < count; i++) {
-      todoList.add(Activity.fromMapObject(todoMapList[i]));
+      todoList.add(Email.fromMapObject(todoMapList[i]));
     }
 
     return todoList;
