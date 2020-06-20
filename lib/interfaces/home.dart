@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:me_daily/Controllers/databasehelper.dart';
+import 'package:me_daily/models/activity.dart';
 import 'package:me_daily/module/tip.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
@@ -30,14 +32,16 @@ class HomeScreenState extends State<HomeScreen> {
   bool isTipVisible = false;
   bool isLiked = false;
   AnimationController _controller;
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  List<Activity> activityList;
+  int count = 0;
 
   void _openAddEntryDialog() {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
           return new AddEntryDialog();
         },
-        fullscreenDialog: true
-    ));
+        fullscreenDialog: true));
   }
 
   void _openAddEmailDialog() {

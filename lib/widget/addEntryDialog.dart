@@ -95,13 +95,17 @@ class AddEntryDialogState extends State<AddEntryDialog> {
           new FlatButton(
               onPressed: () {
                 //TODO: Handle save
+                _save();
               },
               child: new Text('SAVE',
                   style: Theme
                       .of(context)
                       .textTheme
                       .subhead
-                      .copyWith(color: Colors.white))),
+                      .copyWith(color: Colors.white)
+
+              )
+          ),
         ],
       ),
       body: new Column(
