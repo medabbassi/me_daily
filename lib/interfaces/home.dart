@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper.dart';
 import 'package:me_daily/models/activity.dart';
+import 'package:me_daily/models/email.dart';
+import 'package:me_daily/models/message.dart';
 import 'package:me_daily/module/tip.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
@@ -34,6 +36,8 @@ class HomeScreenState extends State<HomeScreen> {
   AnimationController _controller;
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Activity> activityList;
+  List<Email> emailList;
+  List<Message> smsList;
   int count = 0;
 
   void _openAddEntryDialog() {
@@ -361,12 +365,10 @@ class HomeScreenState extends State<HomeScreen> {
                                   ),
                                   SizedBox(width: 12.0),
                                   Text(
-                                    'My plans for today',
-                                    style:
-                                    TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                  ),
+                                    'Planifier pour aujourd\'hui',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              ),
                                 ],
                               ),
                               InkWell(
@@ -405,7 +407,7 @@ class HomeScreenState extends State<HomeScreen> {
                                       height: 16.0,
                                     ),
                                     Text(
-                                      "Do it quickly",
+                                      "Fais le rapidement",
                                       style: TextStyle(fontSize: 13),
                                     ),
 
