@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/interfaces/flowAchievement.dart';
-import 'package:me_daily/interfaces/home.dart';
+import 'package:me_daily/interfaces/home_report.dart';
 import 'package:me_daily/interfaces/makeActivity.dart';
 import 'package:me_daily/interfaces/profile.dart';
 
@@ -54,8 +54,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         body: PageView(
           controller: _pageController,
           children: <Widget>[
-            HomeScreen(),
-            //MyHomePage(),
+            //HomeScreen(),
+            MyHomePage(),
             MakeActivity(),
             flowAchievement(),
             Profile(),

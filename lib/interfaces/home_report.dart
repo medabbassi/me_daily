@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:me_daily/interfaces/usableScreens/activityScreen.dart';
+import 'package:me_daily/widget/loadImage.dart';
 import 'package:wiredash/wiredash.dart';
 
 class MyApp extends StatelessWidget {
@@ -26,15 +29,89 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wiredash Tutorial'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Wiredash.of(context).show();
-        },
-        child: Icon(Icons.add),
-      ),
+
+        body: DefaultTabController(
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                bottom: TabBar(
+                    unselectedLabelColor: Colors.redAccent,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicator: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Colors.redAccent, Colors.orangeAccent]),
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.redAccent),
+                    tabs: [
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("APPS"),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("MOVIES"),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("GAMES"),
+                        ),
+                      ),
+                    ]),
+              ),
+              body: TabBarView(children: [
+                ActivityList(),
+                Icon(Icons.movie),
+                Icon(Icons.games),
+              ]),
+            )
+        )
+
+
     );
   }
+
+}
+
+Widget getToolBar() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      IconButton(
+        icon: SvgPicture.asset('assets/images/menu.svg',
+            color: Colors.black, width: 20, height: 20),
+        onPressed: () {
+          print("object");
+        },
+      ),
+      Row(
+        children: <Widget>[
+          SvgPicture.asset('assets/images/search.svg',
+              color: Colors.black, width: 18, height: 18),
+          SizedBox(
+            width: 8.0,
+          ),
+          SvgPicture.asset('assets/images/bell.svg',
+              color: Colors.black, width: 20, height: 20),
+          SizedBox(
+            width: 8.0,
+          ),
+          LoadImage(
+            "https://drive.google.com/uc?export=view&id=1bcQaCdWNUsXF2he704ZfUrofxw6KV9KH",
+            30,
+            30,
+            0,
+            30,
+            30,
+          ),
+        ],
+      )
+    ],
+  );
 }

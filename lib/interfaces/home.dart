@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper.dart';
-import 'package:me_daily/models/activity.dart';
-import 'package:me_daily/models/email.dart';
-import 'package:me_daily/models/message.dart';
 import 'package:me_daily/module/tip.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
@@ -14,8 +11,6 @@ import 'package:me_daily/widget/addEmailDialog.dart';
 import 'package:me_daily/widget/addEntryDialog.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:unicorndial/unicorndial.dart';
-
-bool liked = false;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,20 +20,20 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-bool isLiked = false;
 
 // ignore: must_be_immutable
 class HomeScreenState extends State<HomeScreen> {
-  bool liked = false;
-  int currentIndex = 0;
-  bool isTipVisible = false;
+
+
+  //bool isTipVisible = false;
   bool isLiked = false;
   AnimationController _controller;
   DatabaseHelper databaseHelper = DatabaseHelper();
-  List<Activity> activityList;
-  List<Email> emailList;
-  List<Message> smsList;
-  int count = 0;
+
+  //List<Activity> activityList;
+  //List<Email> emailList;
+  //List<Message> smsList;
+
 
   void _openAddEntryDialog() {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
@@ -105,6 +100,10 @@ class HomeScreenState extends State<HomeScreen> {
       bulletPoints: [],
       isVisible: true);
 
+  void showDebugger() {
+    print("home work");
+  }
+
   Widget _profileOption({IconData iconData, Function onPressed}) {
     return UnicornButton(
 
@@ -127,6 +126,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+
       body: Container(
         color: Colors.white70,
         margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -144,6 +144,7 @@ class HomeScreenState extends State<HomeScreen> {
                       icon: SvgPicture.asset('assets/images/menu.svg',
                           color: Colors.black, width: 20, height: 20),
                       onPressed: () {
+                        print('menu button pressed');
                         /* Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => MyHomePage()),
@@ -323,7 +324,7 @@ class HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    subheading('My Activities'),
+                    subheading('Mes Activitées'),
 
                   ],
                 ),
@@ -365,9 +366,10 @@ class HomeScreenState extends State<HomeScreen> {
                                   ),
                                   SizedBox(width: 12.0),
                                   Text(
-                                    'Planifier pour aujourd\'hui',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
+                                    'Planifier pour aujourdhui',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
                               ),
                                 ],
                               ),
@@ -389,7 +391,7 @@ class HomeScreenState extends State<HomeScreen> {
                             height: 15.0,
                           ),
                           Text(
-                            tip.title,
+                            "Hello world",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w400),
                           ),
