@@ -19,29 +19,57 @@ class IntroScreenState extends State<IntroScreen> {
 
     slides.add(
       new Slide(
-        title: "ERASER",
+        title: "Profite de la vie",
+        styleTitle: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w800,
+            fontSize: 25.0),
         description:
             "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-        pathImage: "assets/images/photo_eraser.png",
-        backgroundColor: Color(0xfff5a623),
+        styleDescription: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w400,
+            fontSize: 20.0),
+        pathImage: "assets/images/fadher.png",
+        backgroundColor: Colors.white,
       ),
     );
     slides.add(
       new Slide(
-        title: "PENCIL",
+        title: "Arrêter de perdre du temps",
+        styleTitle: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w800,
+            fontSize: 25.0
+        ),
         description:
-            "Ye indulgence unreserved connection alteration appearance",
-        pathImage: "assets/images/photo_pencil.png",
-        backgroundColor: Color(0xff203152),
+        "Ye indulgence unreserved connection alteration appearance",
+        styleDescription: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w400,
+            fontSize: 20.0
+        ),
+        pathImage: "assets/images/organise.png",
+        backgroundColor: Colors.white,
       ),
     );
     slides.add(
       new Slide(
-        title: "RULER",
+        title: "Organiser mon temps",
+        styleTitle: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w800,
+            fontSize: 25.0
+        ),
         description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        pathImage: "assets/images/photo_ruler.png",
-        backgroundColor: Color(0xff9932CC),
+        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+        styleDescription: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w400,
+            fontSize: 20.0
+        ),
+        pathImage: "assets/images/calender.png",
+        backgroundColor: Colors.white,
       ),
     );
   }
@@ -57,6 +85,8 @@ class IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
+      colorSkipBtn: Colors.greenAccent,
+      colorDoneBtn: Colors.greenAccent,
       slides: this.slides,
       onDonePress: this.onDonePress,
     );
