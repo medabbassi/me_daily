@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/Controllers/databasehelper.dart';
+import 'package:me_daily/models/activity.dart';
+import 'package:me_daily/widget/addEntryDialog.dart';
+import 'package:nice_button/nice_button.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ActivityList extends StatefulWidget {
   @override
@@ -11,21 +16,54 @@ class ActivityList extends StatefulWidget {
 
 class _ActivityListState extends State<ActivityList> {
   int count = 0;
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  List<Activity> activityList;
 
   @override
   Widget build(BuildContext context) {
+    if (activityList == null) {
+      activityList = List<Activity>();
+      updateListView();
+    }
     // TODO: implement build
     return Scaffold(
       body: getTodoListView(),
+      floatingActionButton: AddButton(),
     );
   }
 
+  void updateListView() {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database) {
+      // ignore: non_constant_identifier_names
+      Future<List<Activity>> ActivityListFuture = databaseHelper.getTodoList();
+      ActivityListFuture.then((activityList) {
+        setState(() {
+          this.activityList = activityList;
+          this.count = activityList.length;
+        });
+      });
+    });
+  }
+
+  // ignore: non_constant_identifier_names
   Widget AddButton() {
-    return FlatButton(
-      onPressed: () {},
-      child: Text(
-        "Ajoute une activité",
-      ),
+    var firstColor = Color(0xff5b86e5), secondColor = Color(0xff36d1dc);
+
+    return NiceButton(
+      radius: 40,
+      padding: const EdgeInsets.all(15),
+      text: "Ajoute",
+      icon: Icons.accessibility,
+      gradientColors: [secondColor, firstColor],
+      onPressed: () {
+        Navigator.of(context).push(new MaterialPageRoute<Null>(
+            builder: (BuildContext context) {
+              return new AddEntryDialog();
+            },
+            fullscreenDialog: true));
+      },
+      background: null,
     );
   }
 

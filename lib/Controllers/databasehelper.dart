@@ -14,7 +14,7 @@ class DatabaseHelper {
   String colTitle = 'title';
   String colDescription = 'description';
   String colDate = 'date';
-  int colNbRep = 'nbRepeats' as int;
+  String colNbRep = 'nbRepeats';
 
   DatabaseHelper._createInstance(); // Named constructor to create instance of DatabaseHelper
 

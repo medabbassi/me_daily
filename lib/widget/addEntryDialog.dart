@@ -15,15 +15,24 @@ class AddEntryDialog extends StatefulWidget {
 
 class AddEntryDialogState extends State<AddEntryDialog> {
   Activity activity;
+
   DatabaseHelper helper;
+
   DateTime _dateTime = new DateTime.now();
+
   List<DailyMenu> _dailMenus = DailyMenu.getMenu();
+
   List<DropdownMenuItem<DailyMenu>> _dropDownMenuItems;
+
   DailyMenu _selectedDailyMenu;
+
   final TextEditingController _titleController = new TextEditingController();
+
   final TextEditingController _descriptionController =
       new TextEditingController();
+
   final String time = '';
+
   final String nbReapeats = "";
 
   @override
@@ -53,7 +62,10 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   }
 
   void _save() async {
+    moveToLastScreen();
+
     int result;
+
     if (activity.id != null) { // Case 1: Update operation
       result = await helper.updateTodo(activity);
     } else { // Case 2: Insert Operation
@@ -73,6 +85,10 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   // Update the description of todo object
   void updateDescription() {
     activity.description = _descriptionController.text;
+  }
+
+  void moveToLastScreen() {
+    Navigator.pop(context, true);
   }
 
   void _showAlertDialog(String title, String message) {
@@ -116,6 +132,9 @@ class AddEntryDialogState extends State<AddEntryDialog> {
             leading: SizedBox(width: 8.0),
             title: TextField(
               controller: _titleController,
+              onChanged: (value) {
+                debugPrint('Something changed in Title Text Field');
+              },
               decoration: InputDecoration(
 
                 hintText: "add title here",
@@ -135,6 +154,9 @@ class AddEntryDialogState extends State<AddEntryDialog> {
             leading: new Icon(Icons.subject, color: Colors.green),
             title: TextField(
               controller: _descriptionController,
+              onChanged: (value) {
+                debugPrint('Something changed in Title Text Field');
+              },
               decoration: InputDecoration(
                 hintText: "Description",
               ),

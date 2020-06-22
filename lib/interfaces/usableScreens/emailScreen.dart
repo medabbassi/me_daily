@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/widget/addEmailDialog.dart';
+import 'package:nice_button/NiceButton.dart';
 
 class EmailList extends StatefulWidget {
   @override
@@ -17,6 +19,28 @@ class _EmailListState extends State<EmailList> {
     // TODO: implement build
     return Scaffold(
       body: getTodoListView(),
+      floatingActionButton: AddButton(),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget AddButton() {
+    var firstColor = Color(0xff5b86e5), secondColor = Color(0xff36d1dc);
+
+    return NiceButton(
+      radius: 40,
+      padding: const EdgeInsets.all(15),
+      text: "Ajoute",
+      icon: Icons.email,
+      gradientColors: [secondColor, firstColor],
+      onPressed: () {
+        Navigator.of(context).push(new MaterialPageRoute<Null>(
+            builder: (BuildContext context) {
+              return new AddEmailDialog();
+            },
+            fullscreenDialog: true));
+      },
+      background: null,
     );
   }
 
