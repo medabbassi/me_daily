@@ -1,29 +1,44 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:me_daily/Controllers/databasehelper_sms.dart';
+import 'package:me_daily/models/message.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
 import 'package:nice_button/NiceButton.dart';
+import 'package:sqflite/sqflite.dart';
 
 class MessageList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _MessageListState();
+    return MessageListState();
   }
 }
 
-class _MessageListState extends State<MessageList> {
+class MessageListState extends State<MessageList> {
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  List<Message> messageList;
   int count = 0;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    if (messageList == null) {
+      messageList = List<Message>();
+      updateListView();
+    }
+
     return Scaffold(
       body: getTodoListView(),
       floatingActionButton: AddButton(),
+      /* FloatingActionButton(
+        onPressed: () {
+          debugPrint('FAB clicked');
+          navigateToDetail(Activity('',''), 'Add Todo');
+        },
+        tooltip: 'Add Todo',
+        child: Icon(Icons.add),
+      ),*/
     );
   }
-
-  // ignore: non_constant_identifier_names
   Widget AddButton() {
     var firstColor = Color(0xff5b86e5), secondColor = Color(0xff36d1dc);
 
@@ -34,11 +49,8 @@ class _MessageListState extends State<MessageList> {
       icon: Icons.message,
       gradientColors: [secondColor, firstColor],
       onPressed: () {
-        Navigator.of(context).push(new MaterialPageRoute<Null>(
-            builder: (BuildContext context) {
-              return new AddMessageDialog();
-            },
-            fullscreenDialog: true));
+        debugPrint('FAB clicked');
+        navigateToDetail(Message('', ''), 'Add Todo');
       },
       background: null,
     );
@@ -46,39 +58,112 @@ class _MessageListState extends State<MessageList> {
 
   ListView getTodoListView() {
     return ListView.builder(
-        itemCount: count,
-        itemBuilder: (BuildContext context, int position) {
-          return Card(
-            color: Colors.white,
-            elevation: 2.0,
-            child: ListTile(
-              leading: CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  child: Text(
-                    "hhhh",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-              title:
-                  Text("hello", style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(""),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  GestureDetector(
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
-                      onTap: () {
-                        print('jhhhh');
-                      })
-                ],
-              ),
-              onTap: () {
-                debugPrint("ListTile Tapped");
-              },
+      itemCount: count,
+      itemBuilder: (BuildContext context, int position) {
+        return Card(
+          color: Colors.white,
+          elevation: 2.0,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.amber,
+              child: Text(getFirstLetter(this.messageList[position].title),
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-          );
-        });
+            title: Text(this.messageList[position].title,
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(this.messageList[position].description),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                GestureDetector(
+                  child: Icon(Icons.delete, color: Colors.red,),
+                  onTap: () {
+                    _delete(context, messageList[position]);
+                  },
+                ),
+              ],
+            ),
+            onTap: () {
+              debugPrint("ListTile Tapped");
+              print(messageList[position]);
+              navigateToDetail(this.messageList[position], 'Edit Todo');
+            },
+          ),
+        );
+      },
+    );
   }
+
+  // Returns the priority color
+  // Color getPriorityColor(int priority) {
+  // 	switch (priority) {
+  // 		case 1:
+  // 			return Colors.red;
+  // 			break;
+  // 		case 2:
+  // 			return Colors.yellow;
+  // 			break;
+
+  // 		default:
+  // 			return Colors.yellow;
+  // 	}
+  // }
+  getFirstLetter(String title) {
+    return title.substring(0, 2);
+  }
+
+
+  // Returns the priority icon
+  // Icon getPriorityIcon(int priority) {
+  // 	switch (priority) {
+  // 		case 1:
+  // 			return Icon(Icons.play_arrow);
+  // 			break;
+  // 		case 2:
+  // 			return Icon(Icons.keyboard_arrow_right);
+  // 			break;
+
+  // 		default:
+  // 			return Icon(Icons.keyboard_arrow_right);
+  // 	}
+  // }
+
+  void _delete(BuildContext context, Message todo) async {
+    int result = await databaseHelper.deleteTodo(todo.id);
+    if (result != 0) {
+      _showSnackBar(context, 'Todo Deleted Successfully');
+      updateListView();
+    }
+  }
+
+  void _showSnackBar(BuildContext context, String messages) {
+    final snackBar = SnackBar(content: Text(messages));
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
+  void navigateToDetail(Message message, String title) async {
+    bool result =
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return AddMessageDialog(message, title);
+    }));
+
+    if (result == true) {
+      updateListView();
+    }
+  }
+
+  void updateListView() {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<Message>> todoListFuture = databaseHelper.getTodoList();
+      todoListFuture.then((messageList) {
+        setState(() {
+          this.messageList = messageList;
+          this.count = messageList.length;
+        });
+      });
+    });
+  }
+
+
 }

@@ -1,141 +1,290 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:me_daily/Controllers/databasehelper_sms.dart';
+import 'package:me_daily/models/message.dart';
 
 class AddMessageDialog extends StatefulWidget {
+  final String appBarTitle;
+
+  final Message message;
+
+  AddMessageDialog(this.message, this.appBarTitle);
+
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return AddMessageDialogState();
+    return AddMessageDialogState(this.message, this.appBarTitle);
   }
 }
 
 class AddMessageDialogState extends State<AddMessageDialog> {
-  DateTime _dateTime = new DateTime.now();
+
+  //static var _priorities = ['High', 'Low'];
+
+  DatabaseHelper helper = DatabaseHelper();
+
+  String appBarTitle;
+  Message message;
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  AddMessageDialogState(this.message, this.appBarTitle);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Scaffold(
-      appBar: new AppBar(
-        title: const Text('Add Message'),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () {},
-            child: new Text(
-              'SAVE',
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.white),
+    TextStyle textStyle = Theme
+        .of(context)
+        .textTheme
+        .title;
+
+    titleController.text = message.title;
+    descriptionController.text = message.description;
+
+    return WillPopScope(
+
+        onWillPop: () {
+          // Write some code to control things, when user press Back navigation button in device navigationBar
+          moveToLastScreen();
+        },
+
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(appBarTitle),
+            leading: IconButton(icon: Icon(
+                Icons.arrow_back),
+                onPressed: () {
+                  // Write some code to control things, when user press back button in AppBar
+                  moveToLastScreen();
+                }
             ),
           ),
-        ],
-      ),
-      body: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: 8.0),
-          new ListTile(
-              leading: new Icon(Icons.contact_phone),
-              title: TextField(
-                decoration: InputDecoration(hintText: "Recipient phone Number"),
-              )),
-          SizedBox(height: 8.0),
-          new ListTile(
-              leading: new Icon(Icons.create), title: _buildTextField()),
-          SizedBox(height: 8.0),
-          new ListTile(
-            leading: new Icon(Icons.today),
-            title: Text(
-              'Schedule to Sent',
-              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14.0),
+
+          body: Padding(
+            padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+            child: ListView(
+              children: <Widget>[
+
+                // First element
+                // ListTile(
+                //   title: DropdownButton(
+                // 	    items: _priorities.map((String dropDownStringItem) {
+                // 	    	return DropdownMenuItem<String> (
+                // 			    value: dropDownStringItem,
+                // 			    child: Text(dropDownStringItem),
+                // 		    );
+                // 	    }).toList(),
+
+                // 	    style: textStyle,
+
+                // 	    value: getPriorityAsString(todo.priority),
+
+                // 	    onChanged: (valueSelectedByUser) {
+                // 	    	setState(() {
+                // 	    	  debugPrint('User selected $valueSelectedByUser');
+                // 	    	  updatePriorityAsInt(valueSelectedByUser);
+                // 	    	});
+                // 	    }
+                //   ),
+                // ),
+
+                // Second Element
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: TextField(
+                    controller: titleController,
+                    style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Title Text Field');
+                      updateTitle();
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Title',
+                        labelStyle: textStyle,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        )
+                    ),
+                  ),
+                ),
+
+                // Third Element
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: TextField(
+                    controller: descriptionController,
+                    style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Description Text Field');
+                      updateDescription();
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: textStyle,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        )
+                    ),
+                  ),
+                ),
+
+                // Fourth Element
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: RaisedButton(
+                          color: Theme
+                              .of(context)
+                              .primaryColorDark,
+                          textColor: Theme
+                              .of(context)
+                              .primaryColorLight,
+                          child: Text(
+                            'Save',
+                            textScaleFactor: 1.5,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              debugPrint("Save button clicked");
+                              _save();
+                            });
+                          },
+                        ),
+                      ),
+
+                      Container(width: 5.0,),
+
+                      Expanded(
+                        child: RaisedButton(
+                          color: Theme
+                              .of(context)
+                              .primaryColorDark,
+                          textColor: Theme
+                              .of(context)
+                              .primaryColorLight,
+                          child: Text(
+                            'Delete',
+                            textScaleFactor: 1.5,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              debugPrint("Delete button clicked");
+                              _delete();
+                            });
+                          },
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+
+
+              ],
             ),
-            subtitle: new DateTimeItem(
-                dateTime: _dateTime,
-                onChanged: (dateTime) => setState(() => _dateTime = dateTime)),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-Widget _buildTextField() {
-  final maxLines = 6;
-
-  return Container(
-    margin: EdgeInsets.all(10),
-    height: maxLines * 24.0,
-    child: TextField(
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        hintText: "Enter a message",
-        fillColor: Colors.white70,
-        filled: true,
-      ),
-    ),
-  );
-}
-
-class DateTimeItem extends StatelessWidget {
-  DateTimeItem({Key key, DateTime dateTime, @required this.onChanged})
-      : assert(onChanged != null),
-        date = dateTime == null
-            ? new DateTime.now()
-            : new DateTime(dateTime.year, dateTime.month, dateTime.day),
-        time = dateTime == null
-            ? new DateTime.now()
-            : new TimeOfDay(hour: dateTime.hour, minute: dateTime.minute),
-        super(key: key);
-
-  final DateTime date;
-  final TimeOfDay time;
-  final ValueChanged<DateTime> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return new Row(
-      children: <Widget>[
-        new Expanded(
-          child: new InkWell(
-            onTap: (() => _showDatePicker(context)),
-            child: new Padding(
-                padding: new EdgeInsets.symmetric(vertical: 8.0),
-                child: new Text(new DateFormat('EEEE, MMMM d').format(date))),
           ),
-        ),
-        new InkWell(
-          onTap: (() => _showTimePicker(context)),
-          child: new Padding(
-              padding: new EdgeInsets.symmetric(vertical: 8.0),
-              child: new Text('$time')),
-        ),
-      ],
-    );
+
+        ));
   }
 
-  Future _showDatePicker(BuildContext context) async {
-    DateTime dateTimePicked = await showDatePicker(
+  void moveToLastScreen() {
+    Navigator.pop(context, true);
+  }
+
+  // Convert the String priority in the form of integer before saving it to Database
+  // void updatePriorityAsInt(String value) {
+  // 	switch (value) {
+  // 		case 'High':
+  // 			todo.priority = 1;
+  // 			break;
+  // 		case 'Low':
+  // 			todo.priority = 2;
+  // 			break;
+  // 	}
+  // }
+
+  // Convert int priority to String priority and display it to user in DropDown
+  // String getPriorityAsString(int value) {
+  // 	String priority;
+  // 	switch (value) {
+  // 		case 1:
+  // 			priority = _priorities[0];  // 'High'
+  // 			break;
+  // 		case 2:
+  // 			priority = _priorities[1];  // 'Low'
+  // 			break;
+  // 	}
+  // 	return priority;
+  // }
+
+  // Update the title of todo object
+  void updateTitle() {
+    message.title = titleController.text;
+  }
+
+  // Update the description of todo object
+  void updateDescription() {
+    message.description = descriptionController.text;
+  }
+
+  // Save data to database
+  void _save() async {
+    moveToLastScreen();
+    message.date = DateFormat.yMMMd().format(DateTime.now());
+    int result;
+    if (message.id != null) { // Case 1: Update operation
+      result = await helper.updateTodo(message);
+    } else { // Case 2: Insert Operation
+      result = await helper.insertTodo(message);
+    }
+
+    if (result != 0) { // Success
+      _showAlertDialog('Status', 'Todo Saved Successfully');
+    } else { // Failure
+      _showAlertDialog('Status', 'Problem Saving Todo');
+    }
+  }
+
+
+  void _delete() async {
+    moveToLastScreen();
+
+    // Case 1: If user is trying to delete the NEW todo i.e. he has come to
+    // the detail page by pressing the FAB of todoList page.
+    if (message.id == null) {
+      _showAlertDialog('Status', 'No Todo was deleted');
+      return;
+    }
+
+    // Case 2: User is trying to delete the old todo that already has a valid ID.
+    int result = await helper.deleteTodo(message.id);
+    if (result != 0) {
+      _showAlertDialog('Status', 'Todo Deleted Successfully');
+    } else {
+      _showAlertDialog('Status', 'Error Occured while Deleting Todo');
+    }
+  }
+
+  void _showAlertDialog(String title, String messages) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(messages),
+    );
+    showDialog(
         context: context,
-        initialDate: date,
-        firstDate: date.subtract(const Duration(days: 20000)),
-        lastDate: new DateTime.now());
-
-    if (dateTimePicked != null) {
-      onChanged(new DateTime(dateTimePicked.year, dateTimePicked.month,
-          dateTimePicked.day, time.hour, time.minute));
-    }
+        builder: (_) => alertDialog
+    );
   }
 
-  Future _showTimePicker(BuildContext context) async {
-    TimeOfDay timeOfDay =
-        await showTimePicker(context: context, initialTime: time);
-
-    if (timeOfDay != null) {
-      onChanged(new DateTime(
-          date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute));
-    }
-  }
 }
+
+
+
+
+
+
+
+
+
+

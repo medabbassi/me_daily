@@ -1,76 +1,243 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper.dart';
 import 'package:me_daily/models/activity.dart';
-import 'package:me_daily/module/dailyMenu.dart';
-import 'package:meta/meta.dart';
 
 class AddEntryDialog extends StatefulWidget {
+  final String appBarTitle;
+  final Activity activity;
+
+  AddEntryDialog(this.activity, this.appBarTitle);
+
   @override
-  AddEntryDialogState createState() => new AddEntryDialogState();
+  State<StatefulWidget> createState() {
+    return AddEntryDialogState(this.activity, this.appBarTitle);
+  }
 }
 
 class AddEntryDialogState extends State<AddEntryDialog> {
+
+  //static var _priorities = ['High', 'Low'];
+
+  DatabaseHelper helper = DatabaseHelper();
+
+  String appBarTitle;
   Activity activity;
 
-  DatabaseHelper helper;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
-  DateTime _dateTime = new DateTime.now();
-
-  List<DailyMenu> _dailMenus = DailyMenu.getMenu();
-
-  List<DropdownMenuItem<DailyMenu>> _dropDownMenuItems;
-
-  DailyMenu _selectedDailyMenu;
-
-  final TextEditingController _titleController = new TextEditingController();
-
-  final TextEditingController _descriptionController =
-      new TextEditingController();
-
-  final String time = '';
-
-  final String nbReapeats = "";
+  AddEntryDialogState(this.activity, this.appBarTitle);
 
   @override
-  void initState() {
-    _dropDownMenuItems = buildDropdownMenuItems(_dailMenus);
-    _selectedDailyMenu = _dropDownMenuItems[0].value;
-    super.initState();
+  Widget build(BuildContext context) {
+    TextStyle textStyle = Theme
+        .of(context)
+        .textTheme
+        .title;
+
+    titleController.text = activity.title;
+    descriptionController.text = activity.description;
+
+    return WillPopScope(
+
+        onWillPop: () {
+          // Write some code to control things, when user press Back navigation button in device navigationBar
+          moveToLastScreen();
+        },
+
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(appBarTitle),
+            leading: IconButton(icon: Icon(
+                Icons.arrow_back),
+                onPressed: () {
+                  // Write some code to control things, when user press back button in AppBar
+                  moveToLastScreen();
+                }
+            ),
+          ),
+
+          body: Padding(
+            padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+            child: ListView(
+              children: <Widget>[
+
+                // First element
+                // ListTile(
+                //   title: DropdownButton(
+                // 	    items: _priorities.map((String dropDownStringItem) {
+                // 	    	return DropdownMenuItem<String> (
+                // 			    value: dropDownStringItem,
+                // 			    child: Text(dropDownStringItem),
+                // 		    );
+                // 	    }).toList(),
+
+                // 	    style: textStyle,
+
+                // 	    value: getPriorityAsString(todo.priority),
+
+                // 	    onChanged: (valueSelectedByUser) {
+                // 	    	setState(() {
+                // 	    	  debugPrint('User selected $valueSelectedByUser');
+                // 	    	  updatePriorityAsInt(valueSelectedByUser);
+                // 	    	});
+                // 	    }
+                //   ),
+                // ),
+
+                // Second Element
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: TextField(
+                    controller: titleController,
+                    style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Title Text Field');
+                      updateTitle();
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Title',
+                        labelStyle: textStyle,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        )
+                    ),
+                  ),
+                ),
+
+                // Third Element
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: TextField(
+                    controller: descriptionController,
+                    style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Description Text Field');
+                      updateDescription();
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: textStyle,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        )
+                    ),
+                  ),
+                ),
+
+                // Fourth Element
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: RaisedButton(
+                          color: Theme
+                              .of(context)
+                              .primaryColorDark,
+                          textColor: Theme
+                              .of(context)
+                              .primaryColorLight,
+                          child: Text(
+                            'Save',
+                            textScaleFactor: 1.5,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              debugPrint("Save button clicked");
+                              _save();
+                            });
+                          },
+                        ),
+                      ),
+
+                      Container(width: 5.0,),
+
+                      Expanded(
+                        child: RaisedButton(
+                          color: Theme
+                              .of(context)
+                              .primaryColorDark,
+                          textColor: Theme
+                              .of(context)
+                              .primaryColorLight,
+                          child: Text(
+                            'Delete',
+                            textScaleFactor: 1.5,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              debugPrint("Delete button clicked");
+                              _delete();
+                            });
+                          },
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+
+
+              ],
+            ),
+          ),
+
+        ));
   }
 
-  List<DropdownMenuItem<DailyMenu>> buildDropdownMenuItems(List dailyMenus) {
-    List<DropdownMenuItem<DailyMenu>> items = List();
-    for (DailyMenu dailyMenu in dailyMenus) {
-      items.add(
-        DropdownMenuItem(
-          value: dailyMenu,
-          child: Text(dailyMenu.name),
-        ),
-      );
-    }
-    return items;
+  void moveToLastScreen() {
+    Navigator.pop(context, true);
   }
 
-  onChangeDropdownItem(DailyMenu selectedCompany) {
-    setState(() {
-      _selectedDailyMenu = selectedCompany;
-    });
+  // Convert the String priority in the form of integer before saving it to Database
+  // void updatePriorityAsInt(String value) {
+  // 	switch (value) {
+  // 		case 'High':
+  // 			todo.priority = 1;
+  // 			break;
+  // 		case 'Low':
+  // 			todo.priority = 2;
+  // 			break;
+  // 	}
+  // }
+
+  // Convert int priority to String priority and display it to user in DropDown
+  // String getPriorityAsString(int value) {
+  // 	String priority;
+  // 	switch (value) {
+  // 		case 1:
+  // 			priority = _priorities[0];  // 'High'
+  // 			break;
+  // 		case 2:
+  // 			priority = _priorities[1];  // 'Low'
+  // 			break;
+  // 	}
+  // 	return priority;
+  // }
+
+  // Update the title of todo object
+  void updateTitle() {
+    activity.title = titleController.text;
   }
 
+  // Update the description of todo object
+  void updateDescription() {
+    activity.description = descriptionController.text;
+  }
+
+  // Save data to database
   void _save() async {
     moveToLastScreen();
-
+    activity.date = DateFormat.yMMMd().format(DateTime.now());
     int result;
-
     if (activity.id != null) { // Case 1: Update operation
       result = await helper.updateTodo(activity);
     } else { // Case 2: Insert Operation
       result = await helper.insertTodo(activity);
     }
+
     if (result != 0) { // Success
       _showAlertDialog('Status', 'Todo Saved Successfully');
     } else { // Failure
@@ -78,17 +245,24 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     }
   }
 
-  void updateTitle() {
-    activity.title = _titleController.text;
-  }
 
-  // Update the description of todo object
-  void updateDescription() {
-    activity.description = _descriptionController.text;
-  }
+  void _delete() async {
+    moveToLastScreen();
 
-  void moveToLastScreen() {
-    Navigator.pop(context, true);
+    // Case 1: If user is trying to delete the NEW todo i.e. he has come to
+    // the detail page by pressing the FAB of todoList page.
+    if (activity.id == null) {
+      _showAlertDialog('Status', 'No Todo was deleted');
+      return;
+    }
+
+    // Case 2: User is trying to delete the old todo that already has a valid ID.
+    int result = await helper.deleteTodo(activity.id);
+    if (result != 0) {
+      _showAlertDialog('Status', 'Todo Deleted Successfully');
+    } else {
+      _showAlertDialog('Status', 'Error Occured while Deleting Todo');
+    }
   }
 
   void _showAlertDialog(String title, String message) {
@@ -102,143 +276,14 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: const Text('Add Activity'),
-        actions: [
-          new FlatButton(
-              onPressed: () {
-                //TODO: Handle save
-                _save();
-              },
-              child: new Text('SAVE',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .subhead
-                      .copyWith(color: Colors.white)
-
-              )
-          ),
-        ],
-      ),
-      body: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: 8.0),
-          new ListTile(
-            leading: SizedBox(width: 8.0),
-            title: TextField(
-              controller: _titleController,
-              onChanged: (value) {
-                debugPrint('Something changed in Title Text Field');
-              },
-              decoration: InputDecoration(
-
-                hintText: "add title here",
-
-              ),
-            ),
-          ),
-          SizedBox(height: 8.0),
-          new ListTile(
-              leading: new Icon(Icons.alarm, color: Colors.green),
-              title: new DateTimeItem(
-                  dateTime: _dateTime,
-                  onChanged: (dateTime) => setState(() => _dateTime = dateTime))
-          ),
-          SizedBox(height: 8.0),
-          new ListTile(
-            leading: new Icon(Icons.subject, color: Colors.green),
-            title: TextField(
-              controller: _descriptionController,
-              onChanged: (value) {
-                debugPrint('Something changed in Title Text Field');
-              },
-              decoration: InputDecoration(
-                hintText: "Description",
-              ),
-            ),
-          ),
-          SizedBox(height: 8.0),
-
-          SizedBox(height: 8.0),
-          new ListTile(
-            leading: new Icon(Icons.replay, color: Colors.green),
-            title: DropdownButton(
-              value: _selectedDailyMenu,
-              items: _dropDownMenuItems,
-              onChanged: onChangeDropdownItem,
-            ),
-
-          )
-        ],
-      ),
-    );
-  }
 }
 
-class DateTimeItem extends StatelessWidget {
-  DateTimeItem({Key key, DateTime dateTime, @required this.onChanged})
-      : assert(onChanged != null),
-        date = dateTime == null
-            ? new DateTime.now()
-            : new DateTime(dateTime.year, dateTime.month, dateTime.day),
-        time = dateTime == null
-            ? new DateTime.now()
-            : new TimeOfDay(hour: dateTime.hour, minute: dateTime.minute),
-        super(key: key);
 
-  final DateTime date;
-  final TimeOfDay time;
-  final ValueChanged<DateTime> onChanged;
 
-  @override
-  Widget build(BuildContext context) {
-    return new Row(
-      children: <Widget>[
-        new Expanded(
-          child: new InkWell(
-            onTap: (() => _showDatePicker(context)),
-            child: new Padding(
-                padding: new EdgeInsets.symmetric(vertical: 8.0),
-                child: new Text(
-                    new DateFormat('EEEE, MMMM , dd').format(date))),
-          ),
-        ),
-        new InkWell(
-          onTap: (() => _showTimePicker(context)),
-          child: new Padding(
-              padding: new EdgeInsets.symmetric(vertical: 8.0),
-              child: new Text('$time')),
-        ),
-      ],
-    );
-  }
 
-  Future _showDatePicker(BuildContext context) async {
-    DateTime dateTimePicked = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: date.subtract(const Duration(days: 20000)),
-        lastDate: new DateTime.now());
 
-    if (dateTimePicked != null) {
-      onChanged(new DateTime(dateTimePicked.year, dateTimePicked.month,
-          dateTimePicked.day, time.hour, time.minute));
-    }
-  }
 
-  Future _showTimePicker(BuildContext context) async {
-    TimeOfDay timeOfDay =
-    await showTimePicker(context: context, initialTime: time);
 
-    if (timeOfDay != null) {
-      onChanged(new DateTime(
-          date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute));
-    }
-  }
 
-}
+
+

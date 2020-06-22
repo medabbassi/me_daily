@@ -1,77 +1,66 @@
 class Activity {
+
   int _id;
-  int _nbRepeats;
   String _title;
   String _description;
-  String _dateday;
-  String _time;
+  String _date;
 
-  Activity.withId(this._id, this._nbRepeats, this._title, this._description,
-      this._dateday, this._time);
+  Activity(this._title, this._date, [this._description]);
 
-  Activity(this._nbRepeats, this._title, this._description, this._dateday,
-      this._time);
+  Activity.withId(this._id, this._title, this._date, [this._description]);
 
   int get id => _id;
-
-  int get nbRepeats => _nbRepeats;
 
   String get title => _title;
 
   String get description => _description;
 
-  String get dateDay => _dateday;
+  String get date => _date;
 
-  String get time => _time;
-
-  set nbRepeats(int newRepeats) {
-    this._nbRepeats = newRepeats;
-  }
 
   set title(String newTitle) {
-    if (newTitle.length <= 30) {
+    if (newTitle.length <= 255) {
       this._title = newTitle;
     }
   }
 
   set description(String newDescription) {
-    if (newDescription.length <= 30) {
+    if (newDescription.length <= 255) {
       this._description = newDescription;
     }
   }
 
-  set dateDay(String newDateDay) {
-    if (newDateDay.length <= 30) {
-      this._dateday = newDateDay;
-    }
+  set date(String newDate) {
+    this._date = newDate;
   }
 
-  set time(String newTime) {
-    if (newTime.length <= 30) {
-      this._time = newTime;
-    }
-  }
-
+  // Convert a Note object into a Map object
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     if (id != null) {
       map['id'] = _id;
     }
-    map['nbRepeats'] = _nbRepeats;
     map['title'] = _title;
     map['description'] = _description;
-    map['dateday'] = _dateday;
-    map['time'] = _time;
+    map['date'] = _date;
 
     return map;
   }
 
+  // Extract a Note object from a Map object
   Activity.fromMapObject(Map<String, dynamic> map) {
     this._id = map['id'];
-    this._nbRepeats = map['nbRepeats'];
     this._title = map['title'];
     this._description = map['description'];
-    this._dateday = map['dateday'];
-    this._time = map['time'];
+    this._date = map['date'];
   }
 }
+
+
+
+
+
+
+
+
+

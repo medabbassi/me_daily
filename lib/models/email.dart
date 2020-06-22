@@ -1,67 +1,66 @@
 class Email {
+
   int _id;
-  String _recipient;
+  String _title;
   String _description;
-  String _dateday;
-  String _time;
+  String _date;
 
-  Email.withId(
-      this._id, this._recipient, this._description, this._dateday, this._time);
+  Email(this._title, this._date, [this._description]);
 
-  Email(this._recipient, this._description, this._dateday, this._time);
+  Email.withId(this._id, this._title, this._date, [this._description]);
 
   int get id => _id;
 
-  String get recipient => _recipient;
+  String get title => _title;
 
   String get description => _description;
 
-  String get dateDay => _dateday;
+  String get date => _date;
 
-  String get time => _time;
 
-  set recipient(String newRecipient) {
-    if (newRecipient.length <= 30) {
-      this._recipient = newRecipient;
+  set title(String newTitle) {
+    if (newTitle.length <= 255) {
+      this._title = newTitle;
     }
   }
 
   set description(String newDescription) {
-    if (newDescription.length <= 30) {
+    if (newDescription.length <= 255) {
       this._description = newDescription;
     }
   }
 
-  set dateDay(String newDateDay) {
-    if (newDateDay.length <= 30) {
-      this._dateday = newDateDay;
-    }
+  set date(String newDate) {
+    this._date = newDate;
   }
 
-  set time(String newTime) {
-    if (newTime.length <= 30) {
-      this._time = newTime;
-    }
-  }
-
+  // Convert a Note object into a Map object
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     if (id != null) {
       map['id'] = _id;
     }
-    map['recipient'] = _recipient;
+    map['title'] = _title;
     map['description'] = _description;
-    map['dateday'] = _dateday;
-    map['time'] = _time;
+    map['date'] = _date;
 
     return map;
   }
 
+  // Extract a Note object from a Map object
   Email.fromMapObject(Map<String, dynamic> map) {
     this._id = map['id'];
-    this._recipient = map['recipient'];
+    this._title = map['title'];
     this._description = map['description'];
-    this._dateday = map['dateday'];
-    this._time = map['time'];
+    this._date = map['date'];
   }
 }
+
+
+
+
+
+
+
+
+

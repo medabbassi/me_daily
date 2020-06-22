@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:me_daily/interfaces/home.dart';
+import 'package:me_daily/interfaces/home_report.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -224,8 +224,8 @@ class RegisterState extends State<Register> {
             'phone_number', jsonResponse['phone_number']);
         print("Result: ${response.body}");
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
-                (Route<dynamic> route) => false);
+            MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
+            (Route<dynamic> route) => false);
       }
     } else {
       setState(() {
