@@ -48,14 +48,14 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
         child: Scaffold(
           appBar: AppBar(
-            title: Text(appBarTitle),
-            leading: IconButton(icon: Icon(
-                Icons.arrow_back),
+            title: Text("Ajoute une activité"),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   // Write some code to control things, when user press back button in AppBar
                   moveToLastScreen();
-                }
-            ),
+                }),
+            backgroundColor: Colors.green,
           ),
 
           body: Padding(
@@ -133,12 +133,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                     children: <Widget>[
                       Expanded(
                         child: RaisedButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColorDark,
-                          textColor: Theme
-                              .of(context)
-                              .primaryColorLight,
+                          color: Colors.greenAccent,
+                          textColor: Colors.white,
                           child: Text(
                             'Save',
                             textScaleFactor: 1.5,
@@ -156,12 +152,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
                       Expanded(
                         child: RaisedButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColorDark,
-                          textColor: Theme
-                              .of(context)
-                              .primaryColorLight,
+                          color: Colors.greenAccent,
+                          textColor: Colors.white,
                           child: Text(
                             'Delete',
                             textScaleFactor: 1.5,

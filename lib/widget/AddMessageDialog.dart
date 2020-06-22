@@ -49,14 +49,14 @@ class AddMessageDialogState extends State<AddMessageDialog> {
 
         child: Scaffold(
           appBar: AppBar(
-            title: Text(appBarTitle),
-            leading: IconButton(icon: Icon(
-                Icons.arrow_back),
+            backgroundColor: Colors.green,
+            title: Text("Ajoute un sms"),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   // Write some code to control things, when user press back button in AppBar
                   moveToLastScreen();
-                }
-            ),
+                }),
           ),
 
           body: Padding(
@@ -134,14 +134,10 @@ class AddMessageDialogState extends State<AddMessageDialog> {
                     children: <Widget>[
                       Expanded(
                         child: RaisedButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColorDark,
-                          textColor: Theme
-                              .of(context)
-                              .primaryColorLight,
+                          color: Colors.greenAccent,
+                          textColor: Colors.white,
                           child: Text(
-                            'Save',
+                            'Enregistrer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {
@@ -157,14 +153,10 @@ class AddMessageDialogState extends State<AddMessageDialog> {
 
                       Expanded(
                         child: RaisedButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColorDark,
-                          textColor: Theme
-                              .of(context)
-                              .primaryColorLight,
+                          color: Colors.greenAccent,
+                          textColor: Colors.white,
                           child: Text(
-                            'Delete',
+                            'Supprimer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {

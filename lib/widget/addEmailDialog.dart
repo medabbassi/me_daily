@@ -51,14 +51,14 @@ class AddEmailDialogState extends State<AddEmailDialog> {
 
         child: Scaffold(
           appBar: AppBar(
-            title: Text(appBarTitle),
-            leading: IconButton(icon: Icon(
-                Icons.arrow_back),
+            backgroundColor: Colors.green,
+            title: Text("Ajoute un email"),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   // Write some code to control things, when user press back button in AppBar
                   moveToLastScreen();
-                }
-            ),
+                }),
           ),
 
           body: Padding(
@@ -136,14 +136,10 @@ class AddEmailDialogState extends State<AddEmailDialog> {
                     children: <Widget>[
                       Expanded(
                         child: RaisedButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColorDark,
-                          textColor: Theme
-                              .of(context)
-                              .primaryColorLight,
+                          color: Colors.greenAccent,
+                          textColor: Colors.white,
                           child: Text(
-                            'Save',
+                            'Enregistrer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {
@@ -159,14 +155,10 @@ class AddEmailDialogState extends State<AddEmailDialog> {
 
                       Expanded(
                         child: RaisedButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColorDark,
-                          textColor: Theme
-                              .of(context)
-                              .primaryColorLight,
+                          color: Colors.greenAccent,
+                          textColor: Colors.white,
                           child: Text(
-                            'Delete',
+                            'Supprimer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {

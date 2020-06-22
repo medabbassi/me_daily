@@ -39,30 +39,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundColor: Colors.white,
                 elevation: 0,
                 bottom: TabBar(
-                    unselectedLabelColor: Colors.redAccent,
+                    unselectedLabelColor: Colors.green,
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [Colors.redAccent, Colors.orangeAccent]),
+                            colors: [Colors.green, Colors.greenAccent]),
                         borderRadius: BorderRadius.circular(50),
-                        color: Colors.redAccent),
+                        color: Colors.greenAccent),
                     tabs: [
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Activity"),
+                          child: Text("mon activités"),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Email"),
+                          child: Text("mon emails"),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Messages"),
+                          child: Text("mon sms"),
                         ),
                       ),
                     ]),
