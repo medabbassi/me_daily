@@ -6,6 +6,7 @@ import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
+import 'package:nice_button/NiceButton.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -170,30 +171,32 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   ListTile(
-                    leading: new SvgPicture.asset(
-                        "assets/images/password.svg", height: 30.0, width: 30),
-                    title: subheading("Security"),
+                    leading: new SvgPicture.asset("assets/images/password.svg",
+                        height: 30.0, width: 30),
+                    title: subheading("Sécurité"),
                     trailing: IconButton(
-                      icon: Icon(Icons.settings), onPressed: () {},),
+                      icon: Icon(Icons.settings),
+                      onPressed: () {},
+                    ),
                   ),
                   ListTile(
                     leading: new SvgPicture.asset(
                         "assets/images/loan.svg", height: 30.0, width: 30),
-                    title: subheading("terms and privacy"),
+                    title: subheading("Termes et confidentialité"),
                     trailing: IconButton(
                       icon: Icon(Icons.settings), onPressed: () {},),
                   ),
                   ListTile(
                     leading: new SvgPicture.asset(
                         "assets/images/clean.svg", height: 30.0, width: 30),
-                    title: subheading("Wipe my data"),
+                    title: subheading("Essuyez mes données"),
                     trailing: IconButton(
                       icon: Icon(Icons.settings), onPressed: () {},),
                   ),
                   ListTile(
                     leading: new SvgPicture.asset(
                         "assets/images/exit.svg", height: 30.0, width: 30),
-                    title: subheading("Log out"),
+                    title: subheading("Se déconnecter"),
                     trailing: IconButton(
                       icon: Icon(Icons.settings), onPressed: () {
                       sharedPreferences.clear();
@@ -204,16 +207,7 @@ class _ProfileState extends State<Profile> {
                     },),
                   ),
                   SizedBox(height: 12),
-                  new FlatButton(onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  }, child: new Text(
-                      'click me '
-                  ),
-
-                  )
+                  AddButton()
                 ],
               ),
             )
@@ -226,16 +220,37 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget AddButton() {
+    var firstColor = Color(0xff5b86e5),
+        secondColor = Color(0xff36d1dc);
+
+    return NiceButton(
+      radius: 40,
+      padding: const EdgeInsets.all(15),
+      text: "Sé Connecter",
+      gradientColors: [secondColor, firstColor],
+      onPressed: () {
+        debugPrint('FAB clicked');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      },
+      background: null,
+    );
+  }
+
+
+  Text subheading(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+          color: LightColors.kDarkBlue,
+          fontSize: 20.0,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1.2),
+    );
+  }
 }
 
-Text subheading(String title) {
-  return Text(
-    title,
-    style: TextStyle(
-        color: LightColors.kDarkBlue,
-        fontSize: 20.0,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2),
-  );
-}
 
