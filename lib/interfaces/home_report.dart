@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:me_daily/interfaces/usableScreens/activityScreen.dart';
+import 'package:me_daily/interfaces/usableScreens/emailScreen.dart';
+import 'package:me_daily/interfaces/usableScreens/messageScreen.dart';
 import 'package:me_daily/widget/loadImage.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -48,27 +50,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("APPS"),
+                          child: Text("Activity"),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("MOVIES"),
+                          child: Text("Email"),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("GAMES"),
+                          child: Text("Messages"),
                         ),
                       ),
                     ]),
               ),
               body: TabBarView(children: [
                 ActivityList(),
-                Icon(Icons.movie),
-                Icon(Icons.games),
+                EmailList(),
+                MessageList(),
               ]),
             )
         )

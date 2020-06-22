@@ -20,6 +20,15 @@ class _ActivityListState extends State<ActivityList> {
     );
   }
 
+  Widget AddButton() {
+    return FlatButton(
+      onPressed: () {},
+      child: Text(
+        "Ajoute une activité",
+      ),
+    );
+  }
+
   ListView getTodoListView() {
     return ListView.builder(
         itemCount: count,
