@@ -70,7 +70,7 @@ class ActivityListState extends State<ActivityList> {
           //Delay to initial animation
           duration: Duration(seconds: 1),
           onRemove: () => count,
-          curve: Curves.bounceOut,
+          curve: Curves.easeInOutBack,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Card(
