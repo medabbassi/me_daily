@@ -36,6 +36,7 @@ dependencies:
   numberpicker: ^1.2.0
   date_format: ^1.0.8
   intl: ^0.16.1
+  animated_card: ^1.0.0+8
   table_calendar: ^2.2.3
   flutter_sparkline: ^0.1.0
   percent_indicator: "^2.1.1"

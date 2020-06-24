@@ -136,7 +136,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                           color: Colors.greenAccent,
                           textColor: Colors.white,
                           child: Text(
-                            'Save',
+                            'enregistrer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {
@@ -155,7 +155,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                           color: Colors.greenAccent,
                           textColor: Colors.white,
                           child: Text(
-                            'Delete',
+                            'supprimer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {

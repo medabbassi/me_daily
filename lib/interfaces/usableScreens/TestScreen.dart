@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:math' as math;
 
+import 'package:animated_card/animated_card.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/Controllers/databasehelper.dart';
 import 'package:me_daily/models/activity.dart';
@@ -39,6 +41,7 @@ class ActivityListState extends State<ActivityList> {
       ),*/
     );
   }
+
   Widget AddButton() {
     var firstColor = Color(0xff5b86e5), secondColor = Color(0xff36d1dc);
 
@@ -50,7 +53,7 @@ class ActivityListState extends State<ActivityList> {
       gradientColors: [secondColor, firstColor],
       onPressed: () {
         debugPrint('FAB clicked');
-        navigateToDetail(Activity('', ''), 'Add Todo');
+        navigateToDetail(Activity('', ''), 'Ajoute une activité');
       },
       background: null,
     );
@@ -60,35 +63,64 @@ class ActivityListState extends State<ActivityList> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.amber,
-              child: Text(getFirstLetter(this.activityList[position].title),
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            title: Text(this.activityList[position].title,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(this.activityList[position].description),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                GestureDetector(
-                  child: Icon(Icons.delete, color: Colors.red,),
+        return AnimatedCard(
+          direction: AnimatedCardDirection.left,
+          //Initial animation direction
+          initDelay: Duration(milliseconds: 0),
+          //Delay to initial animation
+          duration: Duration(seconds: 1),
+          onRemove: () => count,
+          curve: Curves.bounceOut,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Card(
+              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                  .withOpacity(1.0),
+              elevation: 2.0,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.lightGreenAccent,
+                    child: Text(
+                        getFirstLetter(this.activityList[position].title),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  title: Text(this.activityList[position].title,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Text(this.activityList[position].description),
+                      SizedBox(height: 6),
+                      Text(TimeOfDay.now().toString())
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      GestureDetector(
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        onTap: () {
+                          _delete(context, activityList[position]);
+                        },
+                      ),
+                    ],
+                  ),
                   onTap: () {
-                    _delete(context, activityList[position]);
+                    debugPrint("ListTile Tapped");
+                    print(activityList[position]);
+                    navigateToDetail(
+                        this.activityList[position], 'Modifier l' 'activité');
                   },
                 ),
-              ],
+              ),
             ),
-            onTap: () {
-              debugPrint("ListTile Tapped");
-              print(activityList[position]);
-              navigateToDetail(
-                  this.activityList[position], 'Modifier l' 'activité');
-            },
           ),
         );
       },
@@ -112,7 +144,6 @@ class ActivityListState extends State<ActivityList> {
   getFirstLetter(String title) {
     return title.substring(0, 2);
   }
-
 
   // Returns the priority icon
   // Icon getPriorityIcon(int priority) {
@@ -144,7 +175,7 @@ class ActivityListState extends State<ActivityList> {
 
   void navigateToDetail(Activity activity, String title) async {
     bool result =
-    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddEntryDialog(activity, title);
     }));
 
@@ -165,6 +196,4 @@ class ActivityListState extends State<ActivityList> {
       });
     });
   }
-
-
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:me_daily/interfaces/usableScreens/activityScreen.dart';
+import 'package:me_daily/interfaces/usableScreens/TestScreen.dart';
 import 'package:me_daily/interfaces/usableScreens/emailScreen.dart';
 import 'package:me_daily/interfaces/usableScreens/messageScreen.dart';
 import 'package:me_daily/widget/loadImage.dart';
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("mon activités"),
+                          child: Text("mes activités"),
                         ),
                       ),
                       Tab(
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("mon sms"),
+                          child: Text("mes sms"),
                         ),
                       ),
                     ]),
