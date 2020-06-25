@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:me_daily/models/message.dart';
+import 'package:me_daily/models/sms.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -61,22 +61,21 @@ class DatabaseHelper {
   }
 
   // Insert Operation: Insert a todo object to database
-  Future<int> insertTodo(Message message) async {
+  Future<int> insertTodo(SMS message) async {
     Database db = await this.database;
     var result = await db.insert(messageTable, message.toMap());
     return result;
   }
 
   // Update Operation: Update a todo object and save it to database
-  Future<int> updateTodo(Message message) async {
+  Future<int> updateTodo(SMS message) async {
     var db = await this.database;
-    var result = await db.update(
-        messageTable, message.toMap(), where: '$colId = ?',
-        whereArgs: [message.id]);
+    var result = await db.update(messageTable, message.toMap(),
+        where: '$colId = ?', whereArgs: [message.id]);
     return result;
   }
 
-  Future<int> updateTodoCompleted(Message message) async {
+  Future<int> updateTodoCompleted(SMS message) async {
     var db = await this.database;
     var result = await db.update(
         messageTable, message.toMap(), where: '$colId = ?',
@@ -102,15 +101,15 @@ class DatabaseHelper {
   }
 
   // Get the 'Map List' [ List<Map> ] and convert it to 'todo List' [ List<Todo> ]
-  Future<List<Message>> getTodoList() async {
+  Future<List<SMS>> getTodoList() async {
     var messageMapList = await getTodoMapList(); // Get 'Map List' from database
     int count = messageMapList
         .length; // Count the number of map entries in db table
 
-    List<Message> messageList = List<Message>();
+    List<SMS> messageList = List<SMS>();
     // For loop to create a 'todo List' from a 'Map List'
     for (int i = 0; i < count; i++) {
-      messageList.add(Message.fromMapObject(messageMapList[i]));
+      messageList.add(SMS.fromMapObject(messageMapList[i]));
     }
 
     return messageList;

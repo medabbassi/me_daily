@@ -1,29 +1,119 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper_sms.dart';
-import 'package:me_daily/models/message.dart';
+import 'package:me_daily/models/sms.dart';
 
 class AddMessageDialog extends StatefulWidget {
   final String appBarTitle;
 
-  final Message message;
+  final SMS messages;
 
-  AddMessageDialog(this.message, this.appBarTitle);
+  AddMessageDialog(this.messages, this.appBarTitle);
 
   @override
   State<StatefulWidget> createState() {
-    return AddMessageDialogState(this.message, this.appBarTitle);
+    return AddMessageDialogState(this.messages, this.appBarTitle);
   }
 }
 
 class AddMessageDialogState extends State<AddMessageDialog> {
+  // notifications goes here
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  AndroidInitializationSettings androidInitializationSettings;
+  IOSInitializationSettings iosInitializationSettings;
+  InitializationSettings initializationSettings;
+
+  @override
+  void initState() {
+    super.initState();
+    initializing();
+  }
+
+  void initializing() async {
+    androidInitializationSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    iosInitializationSettings = IOSInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    initializationSettings = InitializationSettings(
+        androidInitializationSettings, iosInitializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification);
+  }
+
+  void _showNotifications() async {
+    await notification();
+  }
+
+  void _showNotificationsAfterSecond() async {
+    await notificationAfterSec();
+  }
+
+  Future<void> notification() async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+            'Channel ID', 'Channel title', 'channel body',
+            priority: Priority.High,
+            importance: Importance.Max,
+            ticker: 'test');
+    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+
+    NotificationDetails notificationDetails =
+        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'Hello there', 'please subscribe my channel', notificationDetails);
+  }
+
+  Future<void> notificationAfterSec() async {
+    var timeDelayed = DateTime.now().add(Duration(seconds: 5));
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+            'second channel ID', 'second Channel title', 'second channel body',
+            priority: Priority.High,
+            importance: Importance.Max,
+            ticker: 'test');
+
+    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+
+    NotificationDetails notificationDetails =
+        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
+        'please subscribe my channel', timeDelayed, notificationDetails);
+  }
+
+  // ignore: missing_return
+  Future onSelectNotification(String payLoad) {
+    if (payLoad != null) {
+      print(payLoad);
+    }
+
+    // we can set navigator to navigate another screen
+  }
+
+  Future onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    return CupertinoAlertDialog(
+      title: Text(title),
+      content: Text(body),
+      actions: <Widget>[
+        CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              print("");
+            },
+            child: Text("Okay")),
+      ],
+    );
+  }
 
   //static var _priorities = ['High', 'Low'];
 
   DatabaseHelper helper = DatabaseHelper();
 
   String appBarTitle;
-  Message message;
+  SMS message;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -32,9 +122,7 @@ class AddMessageDialogState extends State<AddMessageDialog> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme
-        .of(context)
-        .textTheme
+    TextStyle textStyle = Theme.of(context).textTheme
         .title;
 
     titleController.text = message.title;
@@ -141,6 +229,7 @@ class AddMessageDialogState extends State<AddMessageDialog> {
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {
+                            _showNotificationsAfterSecond();
                             setState(() {
                               debugPrint("Save button clicked");
                               _save();

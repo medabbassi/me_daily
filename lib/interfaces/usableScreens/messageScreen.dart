@@ -4,7 +4,7 @@ import 'dart:math' as math;
 import 'package:animated_card/animated_card.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/Controllers/databasehelper_sms.dart';
-import 'package:me_daily/models/message.dart';
+import 'package:me_daily/models/sms.dart';
 import 'package:me_daily/widget/AddMessageDialog.dart';
 import 'package:nice_button/NiceButton.dart';
 import 'package:sqflite/sqflite.dart';
@@ -18,13 +18,13 @@ class MessageList extends StatefulWidget {
 
 class MessageListState extends State<MessageList> {
   DatabaseHelper databaseHelper = DatabaseHelper();
-  List<Message> messageList;
+  List<SMS> messageList;
   int count = 0;
 
   @override
   Widget build(BuildContext context) {
     if (messageList == null) {
-      messageList = List<Message>();
+      messageList = List<SMS>();
       updateListView();
     }
 
@@ -52,7 +52,7 @@ class MessageListState extends State<MessageList> {
       gradientColors: [secondColor, firstColor],
       onPressed: () {
         debugPrint('FAB clicked');
-        navigateToDetail(Message('', ''), 'Add Todo');
+        navigateToDetail(SMS('', ''), 'Add Todo');
       },
       background: null,
     );
@@ -161,7 +161,7 @@ class MessageListState extends State<MessageList> {
   // 	}
   // }
 
-  void _delete(BuildContext context, Message todo) async {
+  void _delete(BuildContext context, SMS todo) async {
     int result = await databaseHelper.deleteTodo(todo.id);
     if (result != 0) {
       _showSnackBar(context, 'Todo Deleted Successfully');
@@ -174,9 +174,9 @@ class MessageListState extends State<MessageList> {
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
-  void navigateToDetail(Message message, String title) async {
+  void navigateToDetail(SMS message, String title) async {
     bool result =
-    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddMessageDialog(message, title);
     }));
 
@@ -188,7 +188,7 @@ class MessageListState extends State<MessageList> {
   void updateListView() {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<Message>> todoListFuture = databaseHelper.getTodoList();
+      Future<List<SMS>> todoListFuture = databaseHelper.getTodoList();
       todoListFuture.then((messageList) {
         setState(() {
           this.messageList = messageList;
