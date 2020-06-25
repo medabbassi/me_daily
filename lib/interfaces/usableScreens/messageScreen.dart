@@ -68,7 +68,9 @@ class MessageListState extends State<MessageList> {
           initDelay: Duration(milliseconds: 0),
           //Delay to initial animation
           duration: Duration(seconds: 1),
-          onRemove: () => count,
+          onRemove: () {
+            _delete(context, messageList[position]);
+          },
           curve: Curves.bounceOut,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),

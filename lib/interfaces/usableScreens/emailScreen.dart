@@ -66,7 +66,9 @@ class EmailListState extends State<EmailList> {
           direction: AnimatedCardDirection.bottom,
           initDelay: Duration(milliseconds: 0),
           duration: Duration(seconds: 1),
-          onRemove: () => count,
+          onRemove: () {
+            _delete(context, emailList[position]);
+          },
           curve: Curves.bounceInOut,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),

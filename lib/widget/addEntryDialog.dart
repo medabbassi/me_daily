@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper.dart';
 import 'package:me_daily/models/activity.dart';
+import 'package:me_daily/widget/localnotification.dart';
 
 class AddEntryDialog extends StatefulWidget {
   final String appBarTitle;
@@ -18,9 +19,10 @@ class AddEntryDialog extends StatefulWidget {
 class AddEntryDialogState extends State<AddEntryDialog> {
 
   //static var _priorities = ['High', 'Low'];
-
   DatabaseHelper helper = DatabaseHelper();
 
+  //LOCAL NOTIFICATIONS SYSTEMS
+  NotificationLocal _local = NotificationLocal();
   String appBarTitle;
   Activity activity;
 
@@ -142,7 +144,9 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                           onPressed: () {
                             setState(() {
                               debugPrint("Save button clicked");
+
                               _save();
+                              _local.showNotifications();
                             });
                           },
                         ),

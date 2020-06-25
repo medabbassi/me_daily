@@ -18,6 +18,7 @@ class ActivityList extends StatefulWidget {
 
 class ActivityListState extends State<ActivityList> {
   DatabaseHelper databaseHelper = DatabaseHelper();
+
   List<Activity> activityList;
   int count = 0;
 
@@ -69,7 +70,9 @@ class ActivityListState extends State<ActivityList> {
           initDelay: Duration(milliseconds: 0),
           //Delay to initial animation
           duration: Duration(seconds: 1),
-          onRemove: () => count,
+          onRemove: () {
+            _delete(context, activityList[position]);
+          },
           curve: Curves.easeInOutBack,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -95,7 +98,7 @@ class ActivityListState extends State<ActivityList> {
                       SizedBox(height: 10),
                       Text(this.activityList[position].description),
                       SizedBox(height: 6),
-                      Text(TimeOfDay.now().toString())
+                      Text(this.activityList[position].date)
                     ],
                   ),
                   trailing: Row(
