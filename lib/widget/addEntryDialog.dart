@@ -32,7 +32,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   }
 
   void initializing() async {
-    androidInitializationSettings = AndroidInitializationSettings('app_icon');
+    androidInitializationSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     iosInitializationSettings = IOSInitializationSettings(
         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     initializationSettings = InitializationSettings(
@@ -81,6 +82,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
         'please subscribe my channel', timeDelayed, notificationDetails);
   }
 
+  // ignore: missing_return
   Future onSelectNotification(String payLoad) {
     if (payLoad != null) {
       print(payLoad);
@@ -184,12 +186,10 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                       updateTitle();
                     },
                     decoration: InputDecoration(
-                        labelText: 'Title',
+                        labelText: 'Titre d' 'activité',
                         labelStyle: textStyle,
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)
-                        )
-                    ),
+                            borderRadius: BorderRadius.circular(5.0))),
                   ),
                 ),
 
@@ -204,7 +204,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                       updateDescription();
                     },
                     decoration: InputDecoration(
-                        labelText: 'Description',
+                        labelText: 'Description d''activité',
                         labelStyle: textStyle,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)
@@ -227,11 +227,11 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {
+                            _showNotifications();
                             setState(() {
                               debugPrint("Save button clicked");
 
                               _save();
-                              _showNotifications();
                             });
                           },
                         ),
