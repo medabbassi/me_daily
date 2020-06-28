@@ -50,7 +50,7 @@ class ActivityListState extends State<ActivityList> {
       gradientColors: [secondColor, firstColor],
       onPressed: () {
         debugPrint('FAB clicked');
-        navigateToDetail(Activity('', ''), 'Add Todo');
+        navigateToDetail(Activity('', '', ''), 'Add Todo');
       },
       background: null,
     );

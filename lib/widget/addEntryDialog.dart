@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:me_daily/Controllers/databasehelper.dart';
 import 'package:me_daily/models/activity.dart';
+import 'package:me_daily/module/dailyMenu.dart';
 
 class AddEntryDialog extends StatefulWidget {
   final String appBarTitle;
@@ -24,12 +25,6 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   AndroidInitializationSettings androidInitializationSettings;
   IOSInitializationSettings iosInitializationSettings;
   InitializationSettings initializationSettings;
-
-  @override
-  void initState() {
-    super.initState();
-    initializing();
-  }
 
   void initializing() async {
     androidInitializationSettings =
@@ -52,17 +47,18 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
   Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-            'Channel ID', 'Channel title', 'channel body',
-            priority: Priority.High,
-            importance: Importance.Max,
-            ticker: 'test');
+    AndroidNotificationDetails(
+        'Channel ID', 'Channel title', 'channel body',
+        priority: Priority.High,
+        importance: Importance.Max,
+        ticker: 'test');
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
     NotificationDetails notificationDetails =
-        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        0, 'Hello there', 'please subscribe my channel', notificationDetails);
+        0, 'Activité sera Enregistré', 'please subscribe my channel',
+        notificationDetails);
   }
 
   Future<void> notificationAfterSec() async {
@@ -115,8 +111,45 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  DateTime _today;
+  DateTime _dueDate;
 
+  //dropDownMenu(ebni drop downMenu Hnaaaaa !!!)
+  List<DailyMenu> daily = DailyMenu.getMenu();
+  List<DropdownMenuItem<DailyMenu>> _dropdownmenu;
+  DailyMenu _selectedMenu;
+
+  List<DropdownMenuItem<DailyMenu>> buildDropdownMenuItems(List dailymenu) {
+    List<DropdownMenuItem<DailyMenu>> items = List();
+    for (DailyMenu daily in dailymenu) {
+      items.add(
+        DropdownMenuItem(
+          value: daily,
+          child: Text(daily.name),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownItem(DailyMenu selectedMenu) {
+    setState(() {
+      _selectedMenu = selectedMenu;
+    });
+  }
+
+  // t7bs hna
   AddEntryDialogState(this.activity, this.appBarTitle);
+
+  @override
+  void initState() {
+    super.initState();
+    _dropdownmenu = buildDropdownMenuItems(daily);
+    _selectedMenu = _dropdownmenu[0].value;
+    _today = DateTime.now();
+    _dueDate = null;
+    initializing();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +163,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
     return WillPopScope(
 
+      // ignore: missing_return
         onWillPop: () {
           // Write some code to control things, when user press Back navigation button in device navigationBar
           moveToLastScreen();
@@ -152,28 +186,6 @@ class AddEntryDialogState extends State<AddEntryDialog> {
             child: ListView(
               children: <Widget>[
 
-                // First element
-                // ListTile(
-                //   title: DropdownButton(
-                // 	    items: _priorities.map((String dropDownStringItem) {
-                // 	    	return DropdownMenuItem<String> (
-                // 			    value: dropDownStringItem,
-                // 			    child: Text(dropDownStringItem),
-                // 		    );
-                // 	    }).toList(),
-
-                // 	    style: textStyle,
-
-                // 	    value: getPriorityAsString(todo.priority),
-
-                // 	    onChanged: (valueSelectedByUser) {
-                // 	    	setState(() {
-                // 	    	  debugPrint('User selected $valueSelectedByUser');
-                // 	    	  updatePriorityAsInt(valueSelectedByUser);
-                // 	    	});
-                // 	    }
-                //   ),
-                // ),
 
                 // Second Element
                 Padding(
@@ -204,7 +216,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                       updateDescription();
                     },
                     decoration: InputDecoration(
-                        labelText: 'Description d''activité',
+                        hintText: 'Description d''activité',
                         labelStyle: textStyle,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)
@@ -212,6 +224,83 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                     ),
                   ),
                 ),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15.0,
+                        bottom: 15.0
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Feather.calendar,
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
+                          ),
+                          onPressed: () async {
+                            final DateTime due = await showDatePicker(
+                              context: context,
+                              initialDate: _today,
+                              firstDate: DateTime(
+                                  _today.year,
+                                  _today.month,
+                                  _today.day
+                              ),
+                              lastDate: DateTime(_today.year + 2, 12, 31),
+                              builder: (BuildContext context, Widget child) {
+                                return Theme(
+                                  data: ThemeData.light(),
+                                  child: child,
+
+                                );
+                              },
+                            );
+                            if (due != null) {
+                              final TimeOfDay time = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay(
+                                  hour: TimeOfDay
+                                      .now()
+                                      .hour + 1,
+                                  minute: 00,
+                                ),
+                              );
+                              if (time != null) {
+                                setState(() {
+                                  _dueDate =
+                                      DateTime(due.year, due.month, due.day,
+                                          time.hour, time.minute);
+                                });
+                              } else {
+                                setState(() {
+                                  _dueDate =
+                                      DateTime(due.year, due.month, due.day);
+                                  updateReminder();
+                                });
+                              }
+                            }
+                          },
+
+                        ), Text(
+                            ""
+                        ),
+                        Row(
+                          children: <Widget>[
+                            DropdownButton(
+                              value: _selectedMenu,
+                              items: _dropdownmenu,
+                              onChanged: onChangeDropdownItem,
+
+                            )
+                          ],
+                        )
+                      ],
+                    )
+
+                ),
+
 
                 // Fourth Element
                 Padding(
@@ -272,46 +361,34 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     Navigator.pop(context, true);
   }
 
-  // Convert the String priority in the form of integer before saving it to Database
-  // void updatePriorityAsInt(String value) {
-  // 	switch (value) {
-  // 		case 'High':
-  // 			todo.priority = 1;
-  // 			break;
-  // 		case 'Low':
-  // 			todo.priority = 2;
-  // 			break;
-  // 	}
-  // }
 
-  // Convert int priority to String priority and display it to user in DropDown
-  // String getPriorityAsString(int value) {
-  // 	String priority;
-  // 	switch (value) {
-  // 		case 1:
-  // 			priority = _priorities[0];  // 'High'
-  // 			break;
-  // 		case 2:
-  // 			priority = _priorities[1];  // 'Low'
-  // 			break;
-  // 	}
-  // 	return priority;
-  // }
-
-  // Update the title of todo object
   void updateTitle() {
     activity.title = titleController.text;
   }
 
-  // Update the description of todo object
+
   void updateDescription() {
     activity.description = descriptionController.text;
   }
 
-  // Save data to database
+  void updateReminder() {
+    activity.date = _dueDate.toString();
+    print(_dueDate.toString());
+  }
+
+  void updateDropDown() {
+    activity.repeat = _selectedMenu.name;
+    print(_selectedMenu.name);
+  }
+
+  /*void updateRepeat(){
+    activity.repeat=dropdownValue;
+ }*/
+
+
   void _save() async {
     moveToLastScreen();
-    activity.date = DateFormat.yMMMd().format(DateTime.now());
+    //activity.date = DateFormat.yMMMd().format(DateTime.now());
     int result;
     if (activity.id != null) { // Case 1: Update operation
       result = await helper.updateTodo(activity);
@@ -320,9 +397,9 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     }
 
     if (result != 0) { // Success
-      _showAlertDialog('Status', 'Todo Saved Successfully');
+      _showAlertDialog('Status', ' cliquez pour fermer');
     } else { // Failure
-      _showAlertDialog('Status', 'Problem Saving Todo');
+      _showAlertDialog('Status', 'une erreur s\'est produite réessayer');
     }
   }
 

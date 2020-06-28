@@ -54,7 +54,7 @@ class ActivityListState extends State<ActivityList> {
       gradientColors: [secondColor, firstColor],
       onPressed: () {
         debugPrint('FAB clicked');
-        navigateToDetail(Activity('', ''), 'Ajoute une activité');
+        navigateToDetail(Activity('', '', ''), 'Ajoute une activité');
       },
       background: null,
     );
@@ -98,7 +98,9 @@ class ActivityListState extends State<ActivityList> {
                       SizedBox(height: 10),
                       Text(this.activityList[position].description),
                       SizedBox(height: 6),
-                      Text(this.activityList[position].date)
+                      Text(this.activityList[position].date),
+                      Text(this.activityList[position].repeat,
+                          style: TextStyle(backgroundColor: Colors.white))
                     ],
                   ),
                   trailing: Row(
@@ -130,43 +132,16 @@ class ActivityListState extends State<ActivityList> {
     );
   }
 
-  // Returns the priority color
-  // Color getPriorityColor(int priority) {
-  // 	switch (priority) {
-  // 		case 1:
-  // 			return Colors.red;
-  // 			break;
-  // 		case 2:
-  // 			return Colors.yellow;
-  // 			break;
 
-  // 		default:
-  // 			return Colors.yellow;
-  // 	}
-  // }
   getFirstLetter(String title) {
     return title.substring(0, 2);
   }
 
-  // Returns the priority icon
-  // Icon getPriorityIcon(int priority) {
-  // 	switch (priority) {
-  // 		case 1:
-  // 			return Icon(Icons.play_arrow);
-  // 			break;
-  // 		case 2:
-  // 			return Icon(Icons.keyboard_arrow_right);
-  // 			break;
-
-  // 		default:
-  // 			return Icon(Icons.keyboard_arrow_right);
-  // 	}
-  // }
 
   void _delete(BuildContext context, Activity todo) async {
     int result = await databaseHelper.deleteTodo(todo.id);
     if (result != 0) {
-      _showSnackBar(context, 'Todo Deleted Successfully');
+      _showSnackBar(context, 'activité supprimer avec succée');
       updateListView();
     }
   }

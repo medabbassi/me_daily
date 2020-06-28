@@ -15,6 +15,7 @@ class DatabaseHelper {
   String colTitle = 'title';
   String colDescription = 'description';
   String colDate = 'date';
+  String colRepeat = 'repeat';
 
   DatabaseHelper._createInstance(); // Named constructor to create instance of DatabaseHelper
 
@@ -37,7 +38,7 @@ class DatabaseHelper {
   Future<Database> initializeDatabase() async {
     // Get the directory path for both Android and iOS to store database.
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'activity.db';
+    String path = directory.path + 'test.db';
 
     // Open/create the database at a given path
     var activityDatabase =
@@ -48,7 +49,7 @@ class DatabaseHelper {
   void _createDb(Database db, int newVersion) async {
     await db.execute(
         'CREATE TABLE $activityTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, '
-            '$colDescription TEXT, $colDate TEXT)');
+            '$colDescription TEXT, $colDate TEXT, $colRepeat TEXT)');
   }
 
   // Fetch Operation: Get all todo objects from database
