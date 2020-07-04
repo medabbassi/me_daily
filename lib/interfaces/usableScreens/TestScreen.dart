@@ -69,11 +69,11 @@ class ActivityListState extends State<ActivityList> {
           //Initial animation direction
           initDelay: Duration(milliseconds: 0),
           //Delay to initial animation
-          duration: Duration(seconds: 1),
+          duration: Duration(seconds: 0),
           onRemove: () {
             _delete(context, activityList[position]);
           },
-          curve: Curves.easeInOutBack,
+          curve: Curves.bounceIn,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Card(

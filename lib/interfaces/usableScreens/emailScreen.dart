@@ -48,7 +48,7 @@ class EmailListState extends State<EmailList> {
       radius: 40,
       padding: const EdgeInsets.all(15),
       text: "Ajoute",
-      icon: Icons.message,
+      icon: Icons.email,
       gradientColors: [secondColor, firstColor],
       onPressed: () {
         debugPrint('FAB clicked');

@@ -169,28 +169,20 @@ Widget progessCardsAndPlanners() {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    subheading('My Tasks'),
-
+                    subheading('Mes activitées'),
                   ],
                 ),
                 SizedBox(height: 15.0),
-                TasksColumn(Icons.alarm,
-                    LightColors.kRed,
-                    'To do',
-                    '5 tasks now. 1 started'),
+                TasksColumn(
+                    Icons.alarm, LightColors.kRed, 'En faite', '1 a commencé'),
                 SizedBox(
                   height: 15.0,
                 ),
-                TasksColumn(Icons.blur_circular,
-                    LightColors.kDarkYellow,
-                    'In progress',
-                    '1 task now ,1 started '),
+                TasksColumn(Icons.blur_circular, LightColors.kDarkYellow,
+                    'En cours', '1 a commencé'),
                 SizedBox(height: 15.0),
-                TasksColumn(Icons.check_circle_outline,
-                    LightColors.kDarkBlue,
-                    'Done',
-                    '18 tasks now. 13 started'),
-
+                TasksColumn(Icons.check_circle_outline, LightColors.kDarkBlue,
+                    'terminé', '18 taches '),
               ],
             ),
           ),
@@ -201,7 +193,7 @@ Widget progessCardsAndPlanners() {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                subheading('Activity In Progress'),
+                subheading('Activitées en progrés'),
                 SizedBox(height: 5.0),
                 Row(
                   children: <Widget>[
@@ -231,7 +223,7 @@ Widget progessCardsAndPlanners() {
                     SizedBox(width: 20.0),
                     ActiveProgressCard(
                       cardColor: LightColors.kBlue,
-                      loadingPercent: 0.9,
+                      loadingPercent: 0.5,
                       title: 'Online Flutter Course',
                       subtitle: '23 hours progress',
                     ),

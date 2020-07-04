@@ -24,8 +24,7 @@ class IntroScreenState extends State<IntroScreen> {
             color: Colors.greenAccent,
             fontWeight: FontWeight.w800,
             fontSize: 25.0),
-        description:
-            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description: "Profitez de votre vie avec un plan de journée organisé",
         styleDescription: TextStyle(
             color: Colors.greenAccent,
             fontWeight: FontWeight.w400,
@@ -43,7 +42,7 @@ class IntroScreenState extends State<IntroScreen> {
             fontSize: 25.0
         ),
         description:
-        "Ye indulgence unreserved connection alteration appearance",
+        "arrêtez de tergiverser et rendez votre journée plus productive",
         styleDescription: TextStyle(
             color: Colors.greenAccent,
             fontWeight: FontWeight.w400,
@@ -62,7 +61,7 @@ class IntroScreenState extends State<IntroScreen> {
             fontSize: 25.0
         ),
         description:
-        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+        "soyez plus minimaliste et passez une bonne journée",
         styleDescription: TextStyle(
             color: Colors.greenAccent,
             fontWeight: FontWeight.w400,

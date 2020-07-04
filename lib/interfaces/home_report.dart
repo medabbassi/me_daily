@@ -36,8 +36,18 @@ class _MyHomePageState extends State<MyHomePage> {
             length: 3,
             child: Scaffold(
               appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  'Me Daily',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.green),
+                  textAlign: TextAlign.center,
+                ),
                 backgroundColor: Colors.white,
                 elevation: 0,
+                actions: <Widget>[],
                 bottom: TabBar(
                     unselectedLabelColor: Colors.green,
                     indicatorSize: TabBarIndicatorSize.tab,

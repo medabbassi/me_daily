@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
+import 'package:me_daily/interfaces/usableScreens/password_reset.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
 import 'package:nice_button/NiceButton.dart';
@@ -176,7 +177,13 @@ class _ProfileState extends State<Profile> {
                     title: subheading("Sécurité"),
                     trailing: IconButton(
                       icon: Icon(Icons.settings),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) {
+                          return userPasswordPage();
+                        }));
+                      },
                     ),
                   ),
                   ListTile(

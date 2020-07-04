@@ -8,7 +8,6 @@ class NotificationLocal {
   IOSInitializationSettings iosInitializationSettings;
   InitializationSettings initializationSettings;
 
-  @override
   void initState() {
     initializing();
   }
@@ -59,10 +58,11 @@ class NotificationLocal {
 
     NotificationDetails notificationDetails =
         NotificationDetails(androidNotificationDetails, iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
+    await flutterLocalNotificationsPlugin.schedule(1, 'beeee or not to be',
         'please subscribe my channel', timeDelayed, notificationDetails);
   }
 
+  // ignore: missing_return
   Future onSelectNotification(String payLoad) {
     if (payLoad != null) {
       print(payLoad);

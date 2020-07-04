@@ -57,8 +57,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     NotificationDetails notificationDetails =
     NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        0, 'Activité sera Enregistré', 'please subscribe my channel',
-        notificationDetails);
+        0, 'Activité sera Enregistré',
+        'voir les activtées', notificationDetails);
   }
 
   Future<void> notificationAfterSec() async {
@@ -74,8 +74,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
     NotificationDetails notificationDetails =
         NotificationDetails(androidNotificationDetails, iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
-        'please subscribe my channel', timeDelayed, notificationDetails);
+    await flutterLocalNotificationsPlugin.schedule(
+        1, 'un act ', 'voir cet email', timeDelayed, notificationDetails);
   }
 
   // ignore: missing_return
@@ -283,7 +283,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                             }
                           },
 
-                        ), Text(
+                        ),
+                        Text(
                             ""
                         ),
                         Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper_email.dart';
 import 'package:me_daily/models/email.dart';
@@ -26,9 +27,15 @@ class AddEmailDialogState extends State<AddEmailDialog> {
   IOSInitializationSettings iosInitializationSettings;
   InitializationSettings initializationSettings;
 
+  ///kkkkkkkkkggghiuygb
+  DateTime _today;
+  DateTime _dueDate;
+
   @override
   void initState() {
     super.initState();
+    _today = DateTime.now();
+    _dueDate = null;
     initializing();
   }
 
@@ -53,17 +60,17 @@ class AddEmailDialogState extends State<AddEmailDialog> {
 
   Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-            'Channel ID', 'Channel title', 'channel body',
-            priority: Priority.High,
-            importance: Importance.Max,
-            ticker: 'test');
+    AndroidNotificationDetails(
+        'Channel ID', 'Channel title', 'channel body',
+        priority: Priority.High,
+        importance: Importance.Max,
+        ticker: 'test');
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
     NotificationDetails notificationDetails =
-        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        0, 'Hello there', 'please subscribe my channel', notificationDetails);
+        0, 'Email a été ajoute', 'voir cet email', notificationDetails);
   }
 
   Future<void> notificationAfterSec() async {
@@ -198,6 +205,24 @@ class AddEmailDialogState extends State<AddEmailDialog> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: TextField(
+                    controller: titleController,
+                    style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Title Text Field');
+                      updateTitle();
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'à',
+                        labelStyle: textStyle,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        )
+                    ),
+                  ),
+                ),
 
                 // Third Element
                 Padding(
@@ -210,7 +235,7 @@ class AddEmailDialogState extends State<AddEmailDialog> {
                       updateDescription();
                     },
                     decoration: InputDecoration(
-                        labelText: 'Description',
+                        labelText: 'corps',
                         labelStyle: textStyle,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)
@@ -218,7 +243,74 @@ class AddEmailDialogState extends State<AddEmailDialog> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Choisire le temps pour envoyer ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            fontFamily: 'Roboto'
+                        ),
+                      ),
+                      SizedBox(width: 5.0),
+                      IconButton(
+                        icon: Icon(
+                          Feather.calendar,
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                        ),
+                        onPressed: () async {
+                          final DateTime due = await showDatePicker(
+                            context: context,
+                            initialDate: _today,
+                            firstDate: DateTime(
+                                _today.year,
+                                _today.month,
+                                _today.day
+                            ),
+                            lastDate: DateTime(_today.year + 2, 12, 31),
+                            builder: (BuildContext context, Widget child) {
+                              return Theme(
+                                data: ThemeData.light(),
+                                child: child,
 
+                              );
+                            },
+                          );
+                          if (due != null) {
+                            final TimeOfDay time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay(
+                                hour: TimeOfDay
+                                    .now()
+                                    .hour + 1,
+                                minute: 00,
+                              ),
+                            );
+                            if (time != null) {
+                              setState(() {
+                                _dueDate =
+                                    DateTime(due.year, due.month, due.day,
+                                        time.hour, time.minute);
+                              });
+                            } else {
+                              setState(() {
+                                _dueDate =
+                                    DateTime(due.year, due.month, due.day);
+                              });
+                            }
+                          }
+                        },
+
+                      )
+                    ],
+                  ),
+
+                ),
                 // Fourth Element
                 Padding(
                   padding: EdgeInsets.only(top: 15.0, bottom: 15.0),

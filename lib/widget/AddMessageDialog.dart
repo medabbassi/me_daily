@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/Controllers/databasehelper_sms.dart';
 import 'package:me_daily/models/sms.dart';
@@ -19,6 +20,10 @@ class AddMessageDialog extends StatefulWidget {
 }
 
 class AddMessageDialogState extends State<AddMessageDialog> {
+  //declaration goes here
+  DateTime _today;
+  DateTime _dueDate;
+
   // notifications goes here
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -29,6 +34,8 @@ class AddMessageDialogState extends State<AddMessageDialog> {
   @override
   void initState() {
     super.initState();
+    _today = DateTime.now();
+    _dueDate = null;
     initializing();
   }
 
@@ -53,15 +60,15 @@ class AddMessageDialogState extends State<AddMessageDialog> {
 
   Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-            'Channel ID', 'Channel title', 'channel body',
-            priority: Priority.High,
-            importance: Importance.Max,
-            ticker: 'test');
+    AndroidNotificationDetails(
+        'Channel ID', 'Channel title', 'channel body',
+        priority: Priority.High,
+        importance: Importance.Max,
+        ticker: 'test');
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
     NotificationDetails notificationDetails =
-        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
         0, 'Hello there', 'please subscribe my channel', notificationDetails);
   }
@@ -69,16 +76,16 @@ class AddMessageDialogState extends State<AddMessageDialog> {
   Future<void> notificationAfterSec() async {
     var timeDelayed = DateTime.now().add(Duration(seconds: 5));
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-            'second channel ID', 'second Channel title', 'second channel body',
-            priority: Priority.High,
-            importance: Importance.Max,
-            ticker: 'test');
+    AndroidNotificationDetails(
+        'second channel ID', 'second Channel title', 'second channel body',
+        priority: Priority.High,
+        importance: Importance.Max,
+        ticker: 'test');
 
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
     NotificationDetails notificationDetails =
-        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
         'please subscribe my channel', timeDelayed, notificationDetails);
   }
@@ -92,8 +99,7 @@ class AddMessageDialogState extends State<AddMessageDialog> {
     // we can set navigator to navigate another screen
   }
 
-  Future onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {
+  Future onDidReceiveLocalNotification(int id, String title, String body, String payload) async {
     return CupertinoAlertDialog(
       title: Text(title),
       content: Text(body),
@@ -186,7 +192,7 @@ class AddMessageDialogState extends State<AddMessageDialog> {
                       updateTitle();
                     },
                     decoration: InputDecoration(
-                        labelText: 'Title',
+                        labelText: 'Recipient',
                         labelStyle: textStyle,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)
@@ -206,7 +212,7 @@ class AddMessageDialogState extends State<AddMessageDialog> {
                       updateDescription();
                     },
                     decoration: InputDecoration(
-                        labelText: 'Description',
+                        labelText: 'Message',
                         labelStyle: textStyle,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)
@@ -214,7 +220,75 @@ class AddMessageDialogState extends State<AddMessageDialog> {
                     ),
                   ),
                 ),
+                //select sending time
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Choisire le temps pour envoyer ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            fontFamily: 'Roboto'
+                        ),
+                      ),
+                      SizedBox(width: 5.0),
+                      IconButton(
+                        icon: Icon(
+                          Feather.calendar,
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                        ),
+                        onPressed: () async {
+                          final DateTime due = await showDatePicker(
+                            context: context,
+                            initialDate: _today,
+                            firstDate: DateTime(
+                                _today.year,
+                                _today.month,
+                                _today.day
+                            ),
+                            lastDate: DateTime(_today.year + 2, 12, 31),
+                            builder: (BuildContext context, Widget child) {
+                              return Theme(
+                                data: ThemeData.light(),
+                                child: child,
 
+                              );
+                            },
+                          );
+                          if (due != null) {
+                            final TimeOfDay time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay(
+                                hour: TimeOfDay
+                                    .now()
+                                    .hour + 1,
+                                minute: 00,
+                              ),
+                            );
+                            if (time != null) {
+                              setState(() {
+                                _dueDate =
+                                    DateTime(due.year, due.month, due.day,
+                                        time.hour, time.minute);
+                              });
+                            } else {
+                              setState(() {
+                                _dueDate =
+                                    DateTime(due.year, due.month, due.day);
+                              });
+                            }
+                          }
+                        },
+
+                      )
+                    ],
+                  ),
+
+                ),
                 // Fourth Element
                 Padding(
                   padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
