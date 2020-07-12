@@ -41,9 +41,6 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     await notification();
   }
 
-  void _showNotificationsAfterSecond() async {
-    await notificationAfterSec();
-  }
 
   Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails =
@@ -153,17 +150,14 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme
-        .of(context)
-        .textTheme
-        .title;
+    TextStyle textStyle = Theme.of(context).textTheme.title;
 
     titleController.text = activity.title;
     descriptionController.text = activity.description;
 
     return WillPopScope(
 
-      // ignore: missing_return
+        // ignore: missing_return
         onWillPop: () {
           // Write some code to control things, when user press Back navigation button in device navigationBar
           moveToLastScreen();

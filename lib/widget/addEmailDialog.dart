@@ -86,8 +86,12 @@ class AddEmailDialogState extends State<AddEmailDialog> {
 
     NotificationDetails notificationDetails =
         NotificationDetails(androidNotificationDetails, iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
-        'please subscribe my channel', timeDelayed, notificationDetails);
+    await flutterLocalNotificationsPlugin.schedule(
+        1,
+        'email ajoute avec succuées',
+        'clicker pour voir',
+        timeDelayed,
+        notificationDetails);
   }
 
   // ignore: missing_return

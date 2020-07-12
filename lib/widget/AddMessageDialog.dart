@@ -60,17 +60,20 @@ class AddMessageDialogState extends State<AddMessageDialog> {
 
   Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails(
-        'Channel ID', 'Channel title', 'channel body',
-        priority: Priority.High,
-        importance: Importance.Max,
-        ticker: 'test');
+        AndroidNotificationDetails(
+            'Channel ID', 'Channel title', 'channel body',
+            priority: Priority.High,
+            importance: Importance.Max,
+            ticker: 'test');
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
     NotificationDetails notificationDetails =
-    NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        0, 'Hello there', 'please subscribe my channel', notificationDetails);
+        0,
+        'Votre message est enregistré avec succées',
+        'clickez ici ',
+        notificationDetails);
   }
 
   Future<void> notificationAfterSec() async {
@@ -86,8 +89,9 @@ class AddMessageDialogState extends State<AddMessageDialog> {
 
     NotificationDetails notificationDetails =
     NotificationDetails(androidNotificationDetails, iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
-        'please subscribe my channel', timeDelayed, notificationDetails);
+    await flutterLocalNotificationsPlugin.schedule(
+        1, 'Votre message est enregistré avec succées',
+        'clickez ici ', timeDelayed, notificationDetails);
   }
 
   // ignore: missing_return
