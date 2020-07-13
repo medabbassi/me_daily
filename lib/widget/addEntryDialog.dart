@@ -72,7 +72,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     NotificationDetails notificationDetails =
         NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.schedule(
-        1, 'un act ', 'voir cet email', timeDelayed, notificationDetails);
+        1, 'un act ', 'Voir cet email', timeDelayed, notificationDetails);
   }
 
   // ignore: missing_return
@@ -328,7 +328,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                           color: Colors.greenAccent,
                           textColor: Colors.white,
                           child: Text(
-                            'supprimer',
+                            'Supprimer',
                             textScaleFactor: 1.5,
                           ),
                           onPressed: () {

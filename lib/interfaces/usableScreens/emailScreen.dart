@@ -93,9 +93,20 @@ class EmailListState extends State<EmailList> {
                       SizedBox(
                         height: 10,
                       ),
+                      Text(
+                        this.emailList[position].description,
+                        style: TextStyle(backgroundColor: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(this.emailList[position].description),
                       SizedBox(height: 6.0),
-                      Text(TimeOfDay.now().toString())
+                      Text(TimeOfDay.now().toString(),
+                          style: TextStyle(backgroundColor: Colors.white)),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                   trailing: Row(
@@ -127,39 +138,11 @@ class EmailListState extends State<EmailList> {
     );
   }
 
-  // Returns the priority color
-  // Color getPriorityColor(int priority) {
-  // 	switch (priority) {
-  // 		case 1:
-  // 			return Colors.red;
-  // 			break;
-  // 		case 2:
-  // 			return Colors.yellow;
-  // 			break;
 
-  // 		default:
-  // 			return Colors.yellow;
-  // 	}
-  // }
   getFirstLetter(String title) {
     return title.substring(0, 2);
   }
 
-
-  // Returns the priority icon
-  // Icon getPriorityIcon(int priority) {
-  // 	switch (priority) {
-  // 		case 1:
-  // 			return Icon(Icons.play_arrow);
-  // 			break;
-  // 		case 2:
-  // 			return Icon(Icons.keyboard_arrow_right);
-  // 			break;
-
-  // 		default:
-  // 			return Icon(Icons.keyboard_arrow_right);
-  // 	}
-  // }
 
   void _delete(BuildContext context, Email todo) async {
     int result = await databaseHelper.deleteTodo(todo.id);
