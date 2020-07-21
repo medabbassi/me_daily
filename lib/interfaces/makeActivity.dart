@@ -51,12 +51,10 @@ class _MakeActivityState extends State<MakeActivity> {
             ),
             SizedBox(height: 8.0),
             TableCalendar(
-              initialCalendarFormat: CalendarFormat.week,
+              initialCalendarFormat: CalendarFormat.month,
               calendarStyle: CalendarStyle(
                   todayColor: Colors.green,
-                  selectedColor: Theme
-                      .of(context)
-                      .primaryColor,
+                  selectedColor: Theme.of(context).primaryColor,
                   todayStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,

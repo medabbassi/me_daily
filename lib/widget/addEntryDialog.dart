@@ -110,10 +110,11 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   TextEditingController descriptionController = TextEditingController();
   DateTime _today;
   DateTime _dueDate;
+  String time;
 
   //dropDownMenu(ebni drop downMenu Hnaaaaa !!!)
   List<DailyMenu> daily = DailyMenu.getMenu();
-  List<DropdownMenuItem<DailyMenu>> _dropdownmenu;
+  List<DropdownMenuItem<DailyMenu>> _dropDownMenu;
   DailyMenu _selectedMenu;
 
   List<DropdownMenuItem<DailyMenu>> buildDropdownMenuItems(List dailymenu) {
@@ -141,10 +142,11 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   @override
   void initState() {
     super.initState();
-    _dropdownmenu = buildDropdownMenuItems(daily);
-    _selectedMenu = _dropdownmenu[0].value;
+    _dropDownMenu = buildDropdownMenuItems(daily);
+    _selectedMenu = _dropDownMenu[0].value;
     _today = DateTime.now();
-    _dueDate = null;
+    _dueDate = DateTime.now();
+
     initializing();
   }
 
@@ -279,13 +281,13 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
                         ),
                         Text(
-                            ""
+                            _dueDate.toString()
                         ),
                         Row(
                           children: <Widget>[
                             DropdownButton(
                               value: _selectedMenu,
-                              items: _dropdownmenu,
+                              items: _dropDownMenu,
                               onChanged: onChangeDropdownItem,
 
                             )
@@ -376,10 +378,6 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     print(_selectedMenu.name);
   }
 
-  /*void updateRepeat(){
-    activity.repeat=dropdownValue;
- }*/
-
 
   void _save() async {
     moveToLastScreen();
@@ -387,7 +385,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     int result;
     if (activity.id != null) { // Case 1: Update operation
       result = await helper.updateTodo(activity);
-    } else { // Case 2: Insert Operation
+    } else {
       result = await helper.insertTodo(activity);
     }
 
@@ -402,8 +400,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
   void _delete() async {
     moveToLastScreen();
 
-    // Case 1: If user is trying to delete the NEW todo i.e. he has come to
-    // the detail page by pressing the FAB of todoList page.
+
     if (activity.id == null) {
       _showAlertDialog('Status', 'No Todo was deleted');
       return;

@@ -10,7 +10,7 @@ class DatabaseHelper {
   static DatabaseHelper _databaseHelper; // Singleton DatabaseHelper
   static Database _database; // Singleton Database
 
-  String activityTable = 'activity_table';
+  String activityTable = 'activity_tables';
   String colId = 'id';
   String colTitle = 'title';
   String colDescription = 'description';
@@ -38,7 +38,7 @@ class DatabaseHelper {
   Future<Database> initializeDatabase() async {
     // Get the directory path for both Android and iOS to store database.
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'test.db';
+    String path = directory.path + 'tests.db';
 
     // Open/create the database at a given path
     var activityDatabase =

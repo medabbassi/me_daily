@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import'package:flutter_svg/flutter_svg.dart';
 import 'package:me_daily/interfaces/login/login_page.dart';
+import 'package:me_daily/interfaces/usableScreens/ReportPage.dart';
 import 'package:me_daily/interfaces/usableScreens/password_reset.dart';
 import 'package:me_daily/theme/Colors/lightColor.dart';
 import 'package:me_daily/widget/topContainer.dart';
@@ -187,18 +188,37 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                   ListTile(
-                    leading: new SvgPicture.asset(
-                        "assets/images/loan.svg", height: 30.0, width: 30),
+                    leading: new SvgPicture.asset("assets/images/loan.svg",
+                        height: 30.0, width: 30),
                     title: subheading("Termes et confidentialité"),
                     trailing: IconButton(
-                      icon: Icon(Icons.settings), onPressed: () {},),
+                      icon: Icon(Icons.settings),
+                      onPressed: () {},
+                    ),
                   ),
                   ListTile(
-                    leading: new SvgPicture.asset(
-                        "assets/images/clean.svg", height: 30.0, width: 30),
+                    leading: new SvgPicture.asset("assets/images/clean.svg",
+                        height: 30.0, width: 30),
                     title: subheading("Essuyez mes données"),
                     trailing: IconButton(
-                      icon: Icon(Icons.settings), onPressed: () {},),
+                      icon: Icon(Icons.settings),
+                      onPressed: () {},
+                    ),
+                  ),
+                  ListTile(
+                    leading: new SvgPicture.asset("assets/images/feedback.svg",
+                        height: 30.0, width: 30),
+                    title: subheading("Votre Commentaire"),
+                    trailing: IconButton(
+                      icon: Icon(Icons.settings),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) {
+                          return ReportPage();
+                        }));
+                      },
+                    ),
                   ),
                   ListTile(
                     leading: new SvgPicture.asset(
